@@ -3,6 +3,7 @@
 A generic api for all subdomains on [vighnesh153.com](https://vighnesh153.com)
 
 ### Steps
+Done
 * [x] `mkdir api-vighnesh153-com`
 * [x] `cd api-vighnesh153-com`
 * [x] `git init`
@@ -23,3 +24,7 @@ A generic api for all subdomains on [vighnesh153.com](https://vighnesh153.com)
   - How would you like to define a style for your project? Use a popular style guide
   - Which style guide do you want to follow? Airbnb
   - What format do you want your config file to be in? Javascript
+* [x] `npm i swagger-ui-express`
+
+Todo
+* [ ] Swagger UI setup
