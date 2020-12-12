@@ -6,3 +6,5 @@ const app = express();
 (async function configureApp() {
   await loaders(app);
 }());
+
+export default app;
