@@ -27,6 +27,7 @@ Done
 * [x] `npm i swagger-ui-express`
 * [x] `npm install mongoose`
 * [x] `touch docker-compose.yml`
+* [x] `INIT_CWD="$(pwd)" npm install husky --save-dev`
 
 Todo
 * [ ] Swagger UI setup
