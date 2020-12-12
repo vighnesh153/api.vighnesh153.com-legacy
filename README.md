@@ -25,6 +25,18 @@ Done
   - Which style guide do you want to follow? Airbnb
   - What format do you want your config file to be in? Javascript
 * [x] `npm i swagger-ui-express`
+* [x] `npm install mongoose`
+* [x] `touch docker-compose.yml`
 
 Todo
 * [ ] Swagger UI setup
+
+
+# Database
+#### Auth
+Collections:
+* Sessions
+
+#### General 
+Collections:
+* Users
