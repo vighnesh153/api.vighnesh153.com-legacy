@@ -5,6 +5,7 @@ const addMissingEnvVar = (varName) => missingEnvVars.push(varName);
 
 const config = {
   env: process.env.NODE_ENV || addMissingEnvVar('NODE_ENV'),
+  port: process.env.PORT || 80,
 };
 
 module.exports = {
