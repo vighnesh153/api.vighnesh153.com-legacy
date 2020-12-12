@@ -14,6 +14,7 @@ async function createConnection(db) {
 
 const dbConnections = {};
 const createdConnections = [];
+
 async function createConnections(db) {
   try {
     dbConnections[db] = await createConnection(db);
@@ -27,9 +28,14 @@ async function createConnections(db) {
   }
 }
 
-module.exports = async (app) => {
+async function configureMongoose(app) {
   for (const db of Object.keys(enums.dbs)) {
     await createConnections(db);
   }
   app.set('connections', dbConnections);
+}
+
+module.exports = {
+  configure: configureMongoose,
+  dbConnections,
 };

@@ -1,6 +1,5 @@
-/*
- * @param(app): require("express")()
- */
-module.exports = async (app) => {
+const mongoose = require('./mongoose');
 
+module.exports = async (app) => {
+  await mongoose.configure(app);
 };
