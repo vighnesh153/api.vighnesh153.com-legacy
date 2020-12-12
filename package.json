@@ -2,7 +2,14 @@
   "name": "api.vighnesh153.com",
   "version": "1.0.0",
   "private": true,
-  "scripts": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:fix"
+    }
+  },
+  "scripts": {
+    "lint:fix": "eslint --fix"
+  },
   "author": "Vighnesh Raut",
   "license": "ISC",
   "dependencies": {
@@ -21,6 +28,7 @@
     "eslint": "^7.15.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.5",
     "nodemon": "^2.0.6",
     "prettier": "^2.2.1"
   }
