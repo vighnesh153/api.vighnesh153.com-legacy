@@ -8,7 +8,7 @@
     }
   },
   "scripts": {
-    "start": "PROJECT_DIR=\"$(pwd)\" node something.js",
+    "start": "node bin/httpServer.js",
     "lint:fix": "eslint --fix"
   },
   "author": "Vighnesh Raut",

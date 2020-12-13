@@ -7,4 +7,4 @@ const app = express();
   await loaders(app);
 }());
 
-export default app;
+module.exports = app;

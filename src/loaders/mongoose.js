@@ -4,12 +4,15 @@ const config = require('../config');
 const enums = require('../enums');
 
 async function createConnection(db) {
-  return await mongoose.createConnection(config.MONGODB_URI + db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  });
+  return await mongoose.createConnection(
+    `${config.MONGODB_URI + db}?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+    },
+  );
 }
 
 const dbConnections = {};

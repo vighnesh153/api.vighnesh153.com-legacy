@@ -41,7 +41,7 @@ const logger = createLogger({
   transports: [transport],
 });
 
-if (util.env.isProd() === false) {
+if (util.env.isProd === false) {
   logger.add(
     new transports.Console({
       format: format.combine(format.colorize(), format.simple()),
