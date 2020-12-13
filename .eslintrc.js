@@ -6,6 +6,10 @@ module.exports = {
   },
   extends: [
     'airbnb-base',
+    'plugin:security/recommended',
+  ],
+  plugins: [
+    'security',
   ],
   parserOptions: {
     ecmaVersion: 12,

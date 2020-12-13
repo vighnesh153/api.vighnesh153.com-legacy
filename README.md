@@ -29,6 +29,7 @@ Done
 * [x] `touch docker-compose.yml`
 * [x] `INIT_CWD="$(pwd)" npm install husky --save-dev`
 * [x] `npm install winston winston-daily-rotate-file`
+* [x] `npm install --save-dev eslint-plugin-security`
 
 Todo
 * [ ] Swagger UI setup
