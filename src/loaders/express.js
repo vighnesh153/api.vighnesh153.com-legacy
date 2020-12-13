@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 
 const util = require('../util');
 
@@ -8,6 +9,8 @@ module.exports = (app) => {
     origin: ['https://vighnesh153.com', /\.vighnesh153\.com$/],
   };
   app.use(util.env.isProd ? cors(corsOptions) : cors());
+
+  app.use(helmet());
 
   app.use(express.json({ limit: '10kb' }));
 
