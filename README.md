@@ -10,7 +10,7 @@ Done
 * [x] `npm init -y`
 * [x] `npx gitignore node`
 * [x] `echo "\n\n\n### CUSTOM \n\n.idea" >> .gitignore`
-* [x] `npm i express cors morgan dotenv`
+* [x] `npm i express cors dotenv`
 * [x] `npm i -D @types/express @types/node nodemon prettier`
 * [x] `export PATH="./node_modules/.bin:$PATH"`
 * [x] `npm install eslint`
@@ -28,6 +28,7 @@ Done
 * [x] `npm install mongoose`
 * [x] `touch docker-compose.yml`
 * [x] `INIT_CWD="$(pwd)" npm install husky --save-dev`
+* [x] `npm install winston winston-daily-rotate-file`
 
 Todo
 * [ ] Swagger UI setup

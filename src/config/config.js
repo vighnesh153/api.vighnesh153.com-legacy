@@ -9,6 +9,7 @@ const config = {
   ENV: env.NODE_ENV || addMissingEnvVar('NODE_ENV'),
   PORT: env.PORT || 80,
   MONGODB_URI: env.MONGODB_URI || addMissingEnvVar('MONGODB_URI'),
+  LOG_LEVEL: env.LOG_LEVEL || 'info',
 };
 
 module.exports = {
