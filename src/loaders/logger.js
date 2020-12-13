@@ -1,3 +1,4 @@
+const path = require('path');
 const { createLogger, format, transports } = require('winston');
 require('winston-daily-rotate-file');
 
@@ -8,7 +9,7 @@ const transport = new transports.DailyRotateFile({
   filename: '%DATE%.log',
   frequency: '24h',
   datePattern: 'YYYY-MM-DD',
-  dirname: '../../logs',
+  dirname: path.resolve(config.PROJECT_DIR, 'logs'),
   maxSize: '20m',
   maxFiles: '3d',
 });

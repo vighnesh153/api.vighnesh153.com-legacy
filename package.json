@@ -8,6 +8,7 @@
     }
   },
   "scripts": {
+    "start": "PROJECT_DIR=\"$(pwd)\" node something.js",
     "lint:fix": "eslint --fix"
   },
   "author": "Vighnesh Raut",
