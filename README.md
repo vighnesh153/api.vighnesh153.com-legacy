@@ -32,6 +32,7 @@ Done
 
 Todo
 * [ ] Swagger UI setup
+* [ ] Make winston work properly with PM2
 
 
 # Database
