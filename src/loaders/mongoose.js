@@ -29,7 +29,7 @@ async function createConnections(db) {
 }
 
 async function configureMongoose(app) {
-  for (const db of Object.keys(enums.dbs)) {
+  for (const db of Object.values(enums.dbs)) {
     await createConnections(db);
   }
   app.set('connections', dbConnections);
