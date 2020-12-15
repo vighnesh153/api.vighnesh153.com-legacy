@@ -24,7 +24,6 @@ Done
   - How would you like to define a style for your project? Use a popular style guide
   - Which style guide do you want to follow? Airbnb
   - What format do you want your config file to be in? Javascript
-* [x] `npm i swagger-ui-express`
 * [x] `npm install mongoose`
 * [x] `touch docker-compose.yml`
 * [x] `INIT_CWD="$(pwd)" npm install husky --save-dev`
@@ -33,7 +32,6 @@ Done
 * [x] `npm install axios`
 
 Todo
-* [ ] Swagger UI setup
 * [ ] Make winston work properly with PM2
 
 
