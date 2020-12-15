@@ -14,6 +14,7 @@ const config = {
   // Server meta information
   ENV: env.NODE_ENV || addMissingEnvVar('NODE_ENV'),
   PORT: env.PORT || 80,
+  COOKIE_SECRET: env.COOKIE_SECRET || 'SUPER SECRET',
 
   // URL meta information
   HOST_URL: env.HOST_URL || addMissingEnvVar('HOST_URL'),

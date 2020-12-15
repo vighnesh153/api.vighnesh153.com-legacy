@@ -5,18 +5,14 @@ const GitHubStrategy = require('passport-github').Strategy;
 
 const config = require('../../config');
 
-function getEmailFromProfile(profile) {
-  return profile.emails[0].value;
-}
-
 function isAdminProfile(profile) {
   return profile.username === config.GITHUB_ADMIN_USERNAME;
 }
 
 function formatUserProfile(profile) {
   const newUser = {
-    name: profile.displayName,
-    email: getEmailFromProfile(profile),
+    name: profile.displayName || profile.username,
+    githubId: profile.id,
     profileImage: profile.photos[0].value,
     roles: ['user'],
   };
@@ -41,8 +37,7 @@ function configureGithubStrategy() {
       githubStrategyOptions,
       async (accessToken, refreshToken, profile, cb) => {
         try {
-          const email = getEmailFromProfile(profile);
-          const user = await User.findOne({ email }).exec();
+          const user = await User.findOne({ githubId: profile.id }).exec();
           if (user !== null) {
             cb(null, user);
             return;
@@ -57,12 +52,12 @@ function configureGithubStrategy() {
   );
 
   passport.serializeUser((user, done) => {
-    done(null, user.email);
+    done(null, user.githubId);
   });
 
-  passport.deserializeUser(async (userEmail, done) => {
+  passport.deserializeUser(async (githubId, done) => {
     try {
-      const filters = { email: userEmail };
+      const filters = { githubId };
       const user = await User.findOne(filters).exec();
       done(null, user);
     } catch (e) {

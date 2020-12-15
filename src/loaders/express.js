@@ -1,24 +1,31 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
 
 const controllers = require('../components/components.routes');
 require('../components/components.models');
 
 const util = require('../util');
+const config = require('../config');
 
 module.exports = (app) => {
   // CORS configuration
-  const corsOptions = {
-    origin: ['https://vighnesh153.com', /\.vighnesh153\.com$/],
-  };
-  app.use(util.env.isProd ? cors(corsOptions) : cors());
+  app.use(
+    cors({
+      origin: util.env.isProd ? [/vighnesh153\.com$/] : [/^http:\/\/localhost/],
+      credentials: true,
+    }),
+  );
 
   // Essential Security Headers
   app.use(helmet());
 
   // Json Body Parser
   app.use(express.json({ limit: '10kb' }));
+
+  // Cookie Parser
+  app.use(cookieParser(config.COOKIE_SECRET));
 
   // Application routes
   controllers.configure(app);

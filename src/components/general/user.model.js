@@ -10,10 +10,10 @@ const User = new Schema({
     required: [true, 'Name is required.'],
   },
 
-  email: {
+  githubId: {
     type: Schema.Types.String,
     unique: true,
-    required: [true, 'Email is required.'],
+    required: [true, 'Github ID is required.'],
   },
 
   profileImage: {

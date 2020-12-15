@@ -7,21 +7,12 @@ const { collections } = require('../../enums');
 const Session = new Schema({
   identifier: {
     type: Schema.Types.String,
+    unique: true,
     required: true,
   },
 
-  name: {
-    type: Schema.Types.String,
-    required: true,
-  },
-
-  email: {
-    type: Schema.Types.String,
-    required: [true, 'Email is required.'],
-  },
-
-  profileImage: {
-    type: Schema.Types.String,
+  userId: {
+    type: Schema.Types.ObjectId,
     required: true,
   },
 

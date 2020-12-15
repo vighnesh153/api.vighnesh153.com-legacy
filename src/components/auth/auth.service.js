@@ -13,9 +13,7 @@ class AuthService {
 
     return await Session.create({
       identifier: crypto.randomBytes(20).toString('hex'),
-      name: loggedInUser.name,
-      email: loggedInUser.email,
-      profileImage: loggedInUser.profileImage,
+      userId: loggedInUser._id,
       roles: loggedInUser.roles,
       expiresAt: new CustomDate().addDays(7).toDate(),
     });
