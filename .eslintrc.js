@@ -7,13 +7,13 @@ module.exports = {
   extends: [
     'airbnb-base',
     'plugin:security/recommended',
+    'plugin:jest/recommended',
   ],
-  plugins: [
-    'security',
-  ],
+  plugins: ['security'],
   parserOptions: {
     ecmaVersion: 12,
   },
+  ignorePatterns: ['node_modules'],
   rules: {
     'no-return-await': 'off',
     'no-param-reassign': 'off',
@@ -21,5 +21,8 @@ module.exports = {
     'no-restricted-syntax': 'off',
     'no-await-in-loop': 'off',
     'no-underscore-dangle': 'off',
+    'consistent-return': 'off',
+
+    'max-len': 'warn',
   },
 };
