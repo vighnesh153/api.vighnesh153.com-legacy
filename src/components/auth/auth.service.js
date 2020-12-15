@@ -6,10 +6,6 @@ const { CustomDate } = require('../../util');
 async function getSession(loggedInUser) {
   const Session = mongoose.model('Session');
 
-  if (loggedInUser.deletedAt !== null) {
-    return null;
-  }
-
   return await Session.create({
     identifier: crypto.randomBytes(20).toString('hex'),
     userId: loggedInUser._id,

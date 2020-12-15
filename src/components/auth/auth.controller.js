@@ -17,6 +17,6 @@ router.get(
   authMiddlewares.verifyLoginSuccess,
 );
 
-router.use(authMiddlewares.wildcardRouteHandler);
+router.use(authMiddlewares.catchAllWildcardRouteHandler);
 
 module.exports = router;

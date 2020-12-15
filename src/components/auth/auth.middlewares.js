@@ -15,9 +15,7 @@ const passportGithubAuthCallback = passport.authenticate('github', {
 async function githubSignupSuccess(req, res, next) {
   try {
     const session = await AuthService.getSession(req.user);
-    if (session === null) {
-      return res.redirect(`${config.AUTH_CLIENT_URL}?failed`);
-    }
+
     res.cookie('sessionId', session.identifier, {
       httpOnly: true,
       secure: env.isProd,
@@ -41,11 +39,11 @@ async function githubSignupSuccess(req, res, next) {
 
 function verifyLoginSuccess(req, res) {
   res.json({
-    message: 'Yes. You are logged in.',
+    message: 'SUCCESS',
   });
 }
 
-function wildcardRouteHandler(req, res) {
+function catchAllWildcardRouteHandler(req, res) {
   res.json({
     message: '✨ Authentication Portal for *.vighnesh153.com ✨',
   });
@@ -56,5 +54,5 @@ module.exports = {
   passportGithubAuthCallback,
   githubSignupSuccess,
   verifyLoginSuccess,
-  wildcardRouteHandler,
+  catchAllWildcardRouteHandler,
 };
