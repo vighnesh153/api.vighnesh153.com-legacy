@@ -30,6 +30,7 @@ Done
 * [x] `INIT_CWD="$(pwd)" npm install husky --save-dev`
 * [x] `npm install winston winston-daily-rotate-file`
 * [x] `npm install --save-dev eslint-plugin-security`
+* [x] `npm install axios`
 
 Todo
 * [ ] Swagger UI setup
