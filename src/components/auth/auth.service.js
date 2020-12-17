@@ -3,7 +3,7 @@ const crypto = require('crypto');
 
 const { CustomDate } = require('../../util');
 
-async function getSession(loggedInUser) {
+async function createSession(loggedInUser) {
   const Session = mongoose.model('Session');
 
   return await Session.create({
@@ -15,5 +15,5 @@ async function getSession(loggedInUser) {
 }
 
 module.exports = {
-  getSession,
+  createSession,
 };
