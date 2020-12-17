@@ -7,7 +7,7 @@ describe('Auth Middlewares Tests', () => {
 
   beforeEach(() => {
     jest.mock('./auth.service', () => ({
-      async getSession() {
+      async createSession() {
         return {
           identifier: 'some-identifier',
         };

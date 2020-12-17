@@ -14,7 +14,7 @@ const passportGithubAuthCallback = passport.authenticate('github', {
 
 async function githubSignupSuccess(req, res, next) {
   try {
-    const session = await AuthService.getSession(req.user);
+    const session = await AuthService.createSession(req.user);
 
     res.cookie('sessionId', session.identifier, {
       httpOnly: true,
