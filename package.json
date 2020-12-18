@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node bin/httpServer.js",
+    "dev": "nodemon bin/httpServer.js",
     "lint:fix": "eslint --fix",
     "test": "jest"
   },
