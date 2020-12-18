@@ -16,21 +16,23 @@ async function githubSignupSuccess(req, res, next) {
   try {
     const session = await AuthService.createSession(req.user);
 
+    const expiresAt = new CustomDate().addDays(7).toDate();
+    const userInfo = {
+      name: req.user.name,
+      roles: req.user.roles,
+      profileImage: req.user.profileImage,
+    };
     res.cookie('sessionId', session.identifier, {
       httpOnly: true,
       secure: env.isProd,
       domain,
       signed: true,
-      expires: new CustomDate().addDays(7).toDate(),
+      expires: expiresAt,
     });
-    res.cookie(
-      'user',
-      JSON.stringify({
-        name: req.user.name,
-        roles: req.user.roles,
-        profileImage: req.user.profileImage,
-      }),
-    );
+    res.cookie('user', JSON.stringify(userInfo), {
+      expires: expiresAt,
+      domain,
+    });
     res.redirect(`${config.AUTH_CLIENT_URL}?loginSuccess`);
   } catch (e) {
     next(e);

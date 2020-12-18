@@ -49,7 +49,11 @@ describe('Auth Middlewares Tests', () => {
         expect.anything(),
         expect.anything(),
       );
-      expect(responseStub.cookie).toBeCalledWith('user', expect.anything());
+      expect(responseStub.cookie).toBeCalledWith(
+        'user',
+        expect.anything(),
+        expect.anything(),
+      );
     });
 
     it('should redirect to auth client URL with a success search-param', async () => {
