@@ -6,7 +6,8 @@
     "start": "node bin/httpServer.js",
     "dev": "nodemon bin/httpServer.js",
     "lint:fix": "eslint --fix",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "author": "Vighnesh Raut",
   "license": "ISC",
