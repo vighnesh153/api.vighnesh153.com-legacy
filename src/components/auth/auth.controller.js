@@ -13,7 +13,7 @@ router.get(
 
 router.get(
   '/verify',
-  middlewares.isLoggedIn,
+  middlewares.ensureAuthenticated,
   authMiddlewares.verifyLoginSuccess,
 );
 

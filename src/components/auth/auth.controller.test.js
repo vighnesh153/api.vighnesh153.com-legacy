@@ -46,7 +46,7 @@ describe('Assign correct middlewares to routes', () => {
   it('should assign correct middlewares to /auth/verify', () => {
     expect(router.get).toBeCalledWith(
       '/verify',
-      middlewares.isLoggedIn,
+      middlewares.ensureAuthenticated,
       authMiddlewares.verifyLoginSuccess,
     );
   });
