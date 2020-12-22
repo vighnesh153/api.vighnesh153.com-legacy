@@ -1,5 +1,5 @@
 const isLoggedIn = require('./isLoggedIn');
 
 module.exports = {
-  isLoggedIn,
+  ensureAuthenticated: isLoggedIn,
 };
