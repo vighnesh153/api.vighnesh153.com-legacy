@@ -3,8 +3,13 @@ const cors = require('cors');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 
-const controllers = require('../components/components.routes');
+// Initialize the mongoose models
 require('../components/components.models');
+
+const controllers = require('../components/components.routes');
+const middlewares = require('../middlewares');
+
+const configureCSRF = require('./csrf');
 
 const util = require('../util');
 const config = require('../config');
@@ -27,13 +32,18 @@ module.exports = (app) => {
   // Cookie Parser
   app.use(cookieParser(config.COOKIE_SECRET));
 
+  // CSRF configuration
+  configureCSRF(app);
+
   // Application routes
   controllers.configure(app);
 
-  // Health checkup basic
+  // TODO: Health checkup, more sophisticated analysis
   app.use('/status', (req, res) => {
     res.sendStatus(200);
   });
+
+  app.use(middlewares.errorHandlerMiddleware);
 
   // Useful if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
   // It shows the real origin IP in the heroku or Cloudwatch logs
