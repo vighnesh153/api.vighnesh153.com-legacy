@@ -1,4 +1,4 @@
-const collections = require('./collections');
+const collections = require("./collections");
 
 module.exports = {
   collections,

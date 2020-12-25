@@ -1,20 +1,20 @@
-const router = require('express').Router();
+const router = require("express").Router();
 
-const authMiddlewares = require('./auth.middlewares');
-const middlewares = require('../../middlewares');
+const authMiddlewares = require("./auth.middlewares");
+const middlewares = require("../../middlewares");
 
-router.get('/github', authMiddlewares.passportGithubAuth);
+router.get("/github", authMiddlewares.passportGithubAuth);
 
 router.get(
-  '/github/callback',
+  "/github/callback",
   authMiddlewares.passportGithubAuthCallback,
-  authMiddlewares.githubSignupSuccess,
+  authMiddlewares.githubSignupSuccess
 );
 
 router.get(
-  '/verify',
+  "/verify",
   middlewares.ensureAuthenticated,
-  authMiddlewares.verifyLoginSuccess,
+  authMiddlewares.verifyLoginSuccess
 );
 
 router.use(authMiddlewares.catchAllWildcardRouteHandler);

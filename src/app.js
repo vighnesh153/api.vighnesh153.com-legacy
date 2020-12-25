@@ -1,5 +1,5 @@
-const express = require('express');
-const loaders = require('./loaders');
+const express = require("express");
+const loaders = require("./loaders");
 
 const app = express();
 
@@ -7,13 +7,13 @@ const app = express();
   try {
     await loaders(app);
   } catch (e) {
-    const logger = app.get('logger');
+    const logger = app.get("logger");
     if (logger) {
       logger.error(e);
     } else {
       console.error(e);
     }
   }
-}());
+})();
 
 module.exports = app;

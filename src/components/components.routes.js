@@ -1,7 +1,7 @@
-const authController = require('./auth/auth.controller');
+const authController = require("./auth/auth.controller");
 
 module.exports = {
   configure: (app) => {
-    app.use('/auth', authController);
+    app.use("/auth", authController);
   },
 };

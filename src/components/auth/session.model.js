@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const { collections } = require('../../enums');
+const { collections } = require("../../enums");
 
 const Session = new Schema({
   identifier: {
@@ -19,7 +19,7 @@ const Session = new Schema({
   roles: {
     type: Schema.Types.Array,
     required: true,
-    default: ['user'],
+    default: ["user"],
   },
 
   expiresAt: {
@@ -27,4 +27,4 @@ const Session = new Schema({
   },
 });
 
-mongoose.model('Session', Session, collections.SESSIONS);
+mongoose.model("Session", Session, collections.SESSIONS);

@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
-const crypto = require('crypto');
+const mongoose = require("mongoose");
+const crypto = require("crypto");
 
-const { CustomDate } = require('../../util');
+const { CustomDate } = require("../../util");
 
 async function createSession(loggedInUser) {
-  const Session = mongoose.model('Session');
+  const Session = mongoose.model("Session");
 
   return await Session.create({
-    identifier: crypto.randomBytes(20).toString('hex'),
+    identifier: crypto.randomBytes(20).toString("hex"),
     userId: loggedInUser._id,
     roles: loggedInUser.roles,
     expiresAt: new CustomDate().addDays(7).toDate(),

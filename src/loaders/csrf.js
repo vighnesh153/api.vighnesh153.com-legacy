@@ -1,6 +1,6 @@
-const csrf = require('csurf');
+const csrf = require("csurf");
 
-const util = require('../util');
+const util = require("../util");
 
 module.exports = function configureCSRF(app) {
   app.use(
@@ -10,12 +10,12 @@ module.exports = function configureCSRF(app) {
         secure: util.env.isProd,
         signed: true,
       },
-      ignoreMethods: ['GET', 'HEAD', 'OPTIONS'],
-    }),
+      ignoreMethods: ["GET", "HEAD", "OPTIONS"],
+    })
   );
 
   app.use((req, res, next) => {
-    res.cookie('XSRF-TOKEN', req.csrfToken());
+    res.cookie("XSRF-TOKEN", req.csrfToken());
     next();
   });
 };

@@ -1,28 +1,28 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 module.exports = async (req, res, next) => {
   const { sessionId } = req.signedCookies;
   if (!sessionId) {
     return res.json({
       status: 401,
-      message: 'NOT_AUTHENTICATED',
+      message: "NOT_AUTHENTICATED",
     });
   }
 
   try {
-    const Session = mongoose.model('Session');
+    const Session = mongoose.model("Session");
     const session = await Session.findOne(
       {
         identifier: sessionId,
       },
-      'userId expiresAt',
+      "userId expiresAt"
     ).exec();
 
     if (session === null) {
       // Invalid session ID
       return res.json({
         status: 400,
-        message: 'BAD_REQUEST',
+        message: "BAD_REQUEST",
       });
     }
 
@@ -30,11 +30,11 @@ module.exports = async (req, res, next) => {
     if (sessionExpiryDate < new Date()) {
       return res.json({
         status: 401,
-        message: 'SESSION_EXPIRED',
+        message: "SESSION_EXPIRED",
       });
     }
 
-    const User = mongoose.model('User');
+    const User = mongoose.model("User");
     const user = await User.findOne({
       _id: session.userId,
     }).exec();

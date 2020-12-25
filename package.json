@@ -5,6 +5,8 @@
   "scripts": {
     "start": "node bin/httpServer.js",
     "dev": "nodemon bin/httpServer.js",
+    "prettier:check": "prettier -c .",
+    "prettier:fix": "prettier -w .",
     "lint:fix": "eslint --fix",
     "test": "jest",
     "test:watch": "jest --watch"

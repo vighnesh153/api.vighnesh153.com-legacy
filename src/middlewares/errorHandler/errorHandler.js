@@ -3,7 +3,7 @@ module.exports = function errorHandler(err, req, res, next) {
     // TODO: Do something and return
     return;
   }
-  if (err.code === 'EBADCSRFTOKEN') {
+  if (err.code === "EBADCSRFTOKEN") {
     // TODO: Do something and return
     console.log(err.code);
     return;

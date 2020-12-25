@@ -1,6 +1,6 @@
-const passport = require('passport');
+const passport = require("passport");
 
-const githubStrategy = require('./githubStrategy');
+const githubStrategy = require("./githubStrategy");
 
 module.exports = (app) => {
   githubStrategy();

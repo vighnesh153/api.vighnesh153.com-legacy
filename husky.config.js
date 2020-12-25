@@ -1,7 +1,11 @@
-const tasks = (arr) => arr.join(' && ');
+const tasks = (arr) => arr.join(" && ");
 
 module.exports = {
   hooks: {
-    'pre-commit': tasks(['npm run lint:fix', 'npm test']),
+    "pre-commit": tasks([
+      "npm run prettier:fix",
+      "npm run lint:fix",
+      "npm test",
+    ]),
   },
 };
