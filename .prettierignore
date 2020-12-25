@@ -7,5 +7,3 @@ logs
 jest.config.js
 
 docker-compose.yml
-
-.eslintrc.js

@@ -1,9 +1,9 @@
-describe("Test Auth Service", () => {
+describe('Test Auth Service', () => {
   let mockSessionObj;
   let authService;
 
   beforeEach(() => {
-    jest.mock("mongoose", () => ({
+    jest.mock('mongoose', () => ({
       model() {
         return {
           async create() {
@@ -14,11 +14,11 @@ describe("Test Auth Service", () => {
       },
     }));
     /* eslint-disable global-require */
-    authService = require("./auth.service");
+    authService = require('./auth.service');
     /* eslint-enable global-require */
   });
 
-  it("should create a new session and return it", async () => {
+  it('should create a new session and return it', async () => {
     const session = await authService.createSession({});
     expect(session).toBe(mockSessionObj);
   });

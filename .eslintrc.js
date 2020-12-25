@@ -24,5 +24,6 @@ module.exports = {
     'consistent-return': 'off',
 
     'max-len': 'warn',
+    'no-unused-vars': 'warn',
   },
 };

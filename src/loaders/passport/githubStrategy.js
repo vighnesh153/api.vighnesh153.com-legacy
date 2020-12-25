@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
-const passport = require("passport");
+const mongoose = require('mongoose');
+const passport = require('passport');
 
-const GitHubStrategy = require("passport-github").Strategy;
+const GitHubStrategy = require('passport-github').Strategy;
 
-const config = require("../../config");
+const config = require('../../config');
 
 function isAdminProfile(profile) {
   return profile.username === config.GITHUB_ADMIN_USERNAME;
@@ -14,16 +14,16 @@ function formatUserProfile(profile) {
     name: profile.displayName || profile.username,
     githubId: profile.id,
     profileImage: profile.photos[0].value,
-    roles: ["user"],
+    roles: ['user'],
   };
   if (isAdminProfile(profile)) {
-    newUser.roles.push("admin");
+    newUser.roles.push('admin');
   }
   return newUser;
 }
 
 function configureGithubStrategy() {
-  const User = mongoose.model("User");
+  const User = mongoose.model('User');
 
   const githubStrategyOptions = {
     clientID: config.GITHUB_CLIENT_ID,
@@ -32,7 +32,7 @@ function configureGithubStrategy() {
   };
 
   passport.use(
-    "github",
+    'github',
     new GitHubStrategy(
       githubStrategyOptions,
       async (accessToken, refreshToken, profile, cb) => {
@@ -47,8 +47,8 @@ function configureGithubStrategy() {
         } catch (e) {
           cb(e, null);
         }
-      }
-    )
+      },
+    ),
   );
 
   passport.serializeUser((user, done) => {

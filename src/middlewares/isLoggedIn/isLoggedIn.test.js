@@ -1,6 +1,6 @@
-const { CustomDate } = require("../../util");
+const { CustomDate } = require('../../util');
 
-describe("Is Logged in: Middleware tests", () => {
+describe('Is Logged in: Middleware tests', () => {
   let reqStub;
   let resStub;
   let nextStub;
@@ -27,14 +27,14 @@ describe("Is Logged in: Middleware tests", () => {
     nextStub = jest.fn();
   });
 
-  describe("Auth Signed cookie not provided", () => {
+  describe('Auth Signed cookie not provided', () => {
     beforeAll(() => {
       jest.resetModules();
     });
 
     beforeEach(async () => {
       /* eslint-disable global-require */
-      isLoggedIn = require("./isLoggedIn");
+      isLoggedIn = require('./isLoggedIn');
       /* eslint-enable global-require */
       await isLoggedIn(reqStub, resStub, nextStub);
     });
@@ -43,26 +43,26 @@ describe("Is Logged in: Middleware tests", () => {
       jest.clearAllMocks();
     });
 
-    it("should call response.json once", () => {
+    it('should call response.json once', () => {
       expect(resStub.json).toBeCalledTimes(1);
     });
 
-    it("should return 401 status code", () => {
+    it('should return 401 status code', () => {
       expect(resStub.json).toBeCalledWith({
         status: 401,
-        message: "NOT_AUTHENTICATED",
+        message: 'NOT_AUTHENTICATED',
       });
     });
 
-    it("should not call next middleware", () => {
+    it('should not call next middleware', () => {
       expect(nextStub).toBeCalledTimes(0);
     });
   });
 
-  describe("Invalid Auth cookie(SessionID) provided", () => {
+  describe('Invalid Auth cookie(SessionID) provided', () => {
     beforeEach(() => {
       jest.resetModules();
-      jest.mock("mongoose", () => ({
+      jest.mock('mongoose', () => ({
         model: () => ({
           findOne() {
             return {
@@ -72,7 +72,7 @@ describe("Is Logged in: Middleware tests", () => {
         }),
       }));
       /* eslint-disable global-require */
-      isLoggedIn = require("./isLoggedIn");
+      isLoggedIn = require('./isLoggedIn');
       /* eslint-enable global-require */
     });
 
@@ -90,32 +90,32 @@ describe("Is Logged in: Middleware tests", () => {
       await isLoggedIn(reqStub, resStub, nextStub);
     });
 
-    it("should call response.json once", () => {
+    it('should call response.json once', () => {
       expect(resStub.json).toBeCalledTimes(1);
     });
 
-    it("should return 400 is invalid session id", async () => {
+    it('should return 400 is invalid session id', async () => {
       expect(resStub.json).toBeCalledWith({
         status: 400,
-        message: "BAD_REQUEST",
+        message: 'BAD_REQUEST',
       });
     });
 
-    it("should not call next middleware", () => {
+    it('should not call next middleware', () => {
       expect(nextStub).toBeCalledTimes(0);
     });
   });
 
-  describe("Valid Auth cookie(SessionID) provided: Session Expired", () => {
+  describe('Valid Auth cookie(SessionID) provided: Session Expired', () => {
     beforeAll(() => {
       jest.resetModules();
       const mockCustomDate = new CustomDate();
-      jest.mock("mongoose", () => ({
+      jest.mock('mongoose', () => ({
         model: () => ({
           findOne() {
             return {
               exec: jest.fn().mockResolvedValue({
-                userId: "123",
+                userId: '123',
                 expiresAt: mockCustomDate.addDays(-1).toDate(),
               }),
             };
@@ -123,7 +123,7 @@ describe("Is Logged in: Middleware tests", () => {
         }),
       }));
       /* eslint-disable global-require */
-      isLoggedIn = require("./isLoggedIn");
+      isLoggedIn = require('./isLoggedIn');
       /* eslint-enable global-require */
     });
 
@@ -141,41 +141,41 @@ describe("Is Logged in: Middleware tests", () => {
       await isLoggedIn(reqStub, resStub, nextStub);
     });
 
-    it("should call response.json once", () => {
+    it('should call response.json once', () => {
       expect(resStub.json).toBeCalledTimes(1);
     });
 
-    it("should return 401 status code", () => {
+    it('should return 401 status code', () => {
       expect(resStub.json).toBeCalledWith({
         status: 401,
-        message: "SESSION_EXPIRED",
+        message: 'SESSION_EXPIRED',
       });
     });
 
-    it("should not call next middleware", () => {
+    it('should not call next middleware', () => {
       expect(nextStub).toBeCalledTimes(0);
     });
   });
 
-  describe("Valid Auth cookie(SessionID) provided: Session Not Expired", () => {
+  describe('Valid Auth cookie(SessionID) provided: Session Not Expired', () => {
     const mockUserObj = {
-      name: "Vighnesh",
+      name: 'Vighnesh',
     };
     beforeAll(() => {
       jest.resetModules();
       const mockCustomDate = new CustomDate();
-      jest.mock("mongoose", () => ({
+      jest.mock('mongoose', () => ({
         model(modelName) {
           return {
             findOne() {
               return {
                 exec: jest.fn().mockResolvedValue(
-                  modelName === "User"
+                  modelName === 'User'
                     ? mockUserObj
                     : {
-                        userId: "123",
-                        expiresAt: mockCustomDate.addDays(2).toDate(),
-                      }
+                      userId: '123',
+                      expiresAt: mockCustomDate.addDays(2).toDate(),
+                    },
                 ),
               };
             },
@@ -183,7 +183,7 @@ describe("Is Logged in: Middleware tests", () => {
         },
       }));
       /* eslint-disable global-require */
-      isLoggedIn = require("./isLoggedIn");
+      isLoggedIn = require('./isLoggedIn');
       /* eslint-enable global-require */
     });
 
@@ -201,19 +201,19 @@ describe("Is Logged in: Middleware tests", () => {
       await isLoggedIn(reqStub, resStub, nextStub);
     });
 
-    it("should not call response.json once", () => {
+    it('should not call response.json once', () => {
       expect(resStub.json).toBeCalledTimes(0);
     });
 
-    it("should assign user to the request", () => {
+    it('should assign user to the request', () => {
       expect(reqStub.user).toBe(mockUserObj);
     });
 
-    it("should call next middleware", () => {
+    it('should call next middleware', () => {
       expect(nextStub).toBeCalledTimes(1);
     });
 
-    it("should call next middleware with no args", () => {
+    it('should call next middleware with no args', () => {
       expect(nextStub).toBeCalledWith();
     });
   });

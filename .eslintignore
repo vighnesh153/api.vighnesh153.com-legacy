@@ -1,0 +1,13 @@
+playground
+
+node_modules
+
+mongo-volume
+
+logs
+
+docker-compose.yml
+
+husky.config.js
+
+jest.config.js

@@ -1,8 +1,8 @@
-const app = require("../src/app");
+const app = require('../src/app');
 
-const config = require("../src/config");
+const config = require('../src/config');
 
-const logger = app.get("logger");
+const logger = app.get('logger');
 
 console.log(config.PROJECT_DIR);
 
@@ -14,7 +14,7 @@ app
       ################################################
   `);
   })
-  .on("error", (err) => {
+  .on('error', (err) => {
     logger.error(err);
     process.exit(1);
   });

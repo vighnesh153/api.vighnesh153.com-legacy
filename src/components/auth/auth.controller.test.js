@@ -1,14 +1,14 @@
-describe("Assign correct middlewares to routes", () => {
+describe('Assign correct middlewares to routes', () => {
   let router;
   let middlewares;
   let authMiddlewares;
 
   beforeAll(() => {
     /* eslint-disable global-require */
-    middlewares = require("../../middlewares");
-    authMiddlewares = require("./auth.middlewares");
+    middlewares = require('../../middlewares');
+    authMiddlewares = require('./auth.middlewares');
 
-    jest.mock("express", () => ({
+    jest.mock('express', () => ({
       Router() {
         return {
           get: jest.fn(),
@@ -16,7 +16,7 @@ describe("Assign correct middlewares to routes", () => {
         };
       },
     }));
-    router = require("./auth.controller");
+    router = require('./auth.controller');
     /* eslint-enable global-require */
   });
 
@@ -24,30 +24,30 @@ describe("Assign correct middlewares to routes", () => {
     jest.clearAllMocks();
   });
 
-  it("should define 3 routes", () => {
+  it('should define 3 routes', () => {
     expect(router.get).toBeCalledTimes(3);
   });
 
-  it("should assign correct middlewares to /auth/github", () => {
+  it('should assign correct middlewares to /auth/github', () => {
     expect(router.get).toBeCalledWith(
-      "/github",
-      authMiddlewares.passportGithubAuth
+      '/github',
+      authMiddlewares.passportGithubAuth,
     );
   });
 
-  it("should assign correct middlewares to /auth/github/callback", () => {
+  it('should assign correct middlewares to /auth/github/callback', () => {
     expect(router.get).toBeCalledWith(
-      "/github/callback",
+      '/github/callback',
       authMiddlewares.passportGithubAuthCallback,
-      authMiddlewares.githubSignupSuccess
+      authMiddlewares.githubSignupSuccess,
     );
   });
 
-  it("should assign correct middlewares to /auth/verify", () => {
+  it('should assign correct middlewares to /auth/verify', () => {
     expect(router.get).toBeCalledWith(
-      "/verify",
+      '/verify',
       middlewares.ensureAuthenticated,
-      authMiddlewares.verifyLoginSuccess
+      authMiddlewares.verifyLoginSuccess,
     );
   });
 });

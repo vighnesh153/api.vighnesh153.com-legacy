@@ -1,4 +1,4 @@
 module.exports = {
-  SESSIONS: "sessions",
-  USERS: "users",
+  SESSIONS: 'sessions',
+  USERS: 'users',
 };

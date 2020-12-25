@@ -1,2 +1,2 @@
-require("./general/user.model");
-require("./auth/session.model");
+require('./general/user.model');
+require('./auth/session.model');

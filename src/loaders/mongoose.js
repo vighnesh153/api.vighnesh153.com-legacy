@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const config = require("../config");
+const config = require('../config');
 
 async function configureMongoose() {
   await mongoose.connect(config.MONGODB_URI, {
