@@ -5,8 +5,11 @@ module.exports = async (app) => {
 
   try {
     await mongoose.connection.close();
-    logger.silly('Connection closed.');
+    logger.debug('Connection closed.');
+    logger.debug('Shutting down.');
   } catch (e) {
     logger.error(e);
+  } finally {
+    process.exit(1);
   }
 };

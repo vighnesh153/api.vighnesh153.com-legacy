@@ -1,14 +1,36 @@
-module.exports = function errorHandler(err, req, res, next) {
+const { gracefulShutdown } = require('../../util');
+
+module.exports = async function errorHandler(err, req, res, next) {
+  const { logger } = req;
+
   if (err.isTrusted) {
-    // TODO: Do something and return
+    logger.warn({
+      message: err.message,
+      requestBody: req.body,
+      params: req.params,
+    });
+    res.sendStatus(err.statusCode);
     return;
   }
   if (err.code === 'EBADCSRFTOKEN') {
-    // TODO: Do something and return
-    console.log(err.code);
+    logger.warn({
+      message: 'Error Bad CSRF Token',
+      path: req.url,
+      requestBody: req.body,
+      params: req.params,
+    });
+    res.sendStatus(400);
     return;
   }
-  // TODO: Do something or crash as it is not a
-  //  trusted error
-  console.log(err);
+
+  // Not a trusted error
+  logger.error({
+    message: err.message,
+    stackTrace: err.stack,
+    path: req.url,
+    requestBody: req.body,
+    params: req.params,
+  });
+  res.sendStatus(500);
+  await gracefulShutdown(req.app);
 };
