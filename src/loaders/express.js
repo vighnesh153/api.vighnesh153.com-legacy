@@ -35,6 +35,9 @@ module.exports = (app) => {
   // CSRF configuration
   configureCSRF(app);
 
+  // Attaches a request Id to the request and logger
+  app.use(middlewares.assignIdToRequest);
+
   // Application routes
   controllers.configure(app);
 
