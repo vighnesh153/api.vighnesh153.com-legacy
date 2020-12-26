@@ -1,5 +1,5 @@
 const uuid = require('uuid');
-const assignIdToRequest = require('./assignIdToRequest');
+const assignMetaToRequestAndLogger = require('./assignMetaToRequestAndLogger');
 
 describe('Middleware: Assign ID to Request', () => {
   let reqStub;
@@ -18,24 +18,24 @@ describe('Middleware: Assign ID to Request', () => {
   });
 
   it('should call next once', () => {
-    assignIdToRequest(reqStub, {}, nextStub);
+    assignMetaToRequestAndLogger(reqStub, {}, nextStub);
     expect(nextStub).toBeCalledTimes(1);
   });
 
   it('should assign logger to request object', () => {
-    assignIdToRequest(reqStub, {}, nextStub);
+    assignMetaToRequestAndLogger(reqStub, {}, nextStub);
     expect(reqStub.logger).toBeDefined();
   });
 
   it('should assign a valid uuid to request', () => {
-    assignIdToRequest(reqStub, {}, nextStub);
+    assignMetaToRequestAndLogger(reqStub, {}, nextStub);
 
     const isUUIDValid = uuid.validate(reqStub.requestId);
     expect(isUUIDValid).toBe(true);
   });
 
   it('should assign same requestId to logger and request instance', () => {
-    assignIdToRequest(reqStub, {}, nextStub);
+    assignMetaToRequestAndLogger(reqStub, {}, nextStub);
     const { logger } = reqStub;
     logger.info({});
 
@@ -43,7 +43,7 @@ describe('Middleware: Assign ID to Request', () => {
   });
 
   it('should call the actual logger instance with a request UUID', () => {
-    assignIdToRequest(reqStub, {}, () => {
+    assignMetaToRequestAndLogger(reqStub, {}, () => {
       const { logger } = reqStub;
 
       const logObject = {
@@ -54,6 +54,7 @@ describe('Middleware: Assign ID to Request', () => {
 
       expect(loggerStub.info).toBeCalledWith({
         requestId: expect.anything(),
+        time: expect.anything(),
         ...logObject,
       });
     });

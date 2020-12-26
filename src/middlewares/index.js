@@ -1,9 +1,9 @@
 const isLoggedIn = require('./isLoggedIn');
 const errorHandler = require('./errorHandler');
-const assignIdToRequest = require('./assignIdToRequest');
+const assignMetaToRequestAndLogger = require('./assignMetaToRequestAndLogger');
 
 module.exports = {
   ensureAuthenticated: isLoggedIn,
   errorHandlerMiddleware: errorHandler,
-  assignIdToRequest,
+  assignMetaToRequestAndLogger,
 };
