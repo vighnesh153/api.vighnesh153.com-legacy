@@ -15,6 +15,8 @@ const util = require('../util');
 const config = require('../config');
 
 module.exports = (app) => {
+  app.set('trust proxy', 1);
+
   // CORS configuration
   app.use(
     cors({
