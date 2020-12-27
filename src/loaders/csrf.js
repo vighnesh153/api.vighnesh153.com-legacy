@@ -11,7 +11,6 @@ module.exports = function configureCSRF(app) {
         httpOnly: true,
         secure: util.env.isProd,
         signed: true,
-        domain,
       },
       ignoreMethods: ['GET', 'HEAD', 'OPTIONS'],
     }),
