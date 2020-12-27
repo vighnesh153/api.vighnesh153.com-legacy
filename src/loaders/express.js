@@ -59,6 +59,10 @@ module.exports = (app) => {
   // Application routes
   controllers.configure(app);
 
+  // 404 route handler
+  app.use(middlewares.handle404);
+
+  // Error handling middleware
   app.use(middlewares.errorHandlerMiddleware);
 
   // Useful if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
