@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const rateLimit = require('express-rate-limit');
 
 // Initialize the mongoose models
 require('../components/components.models');
@@ -17,6 +18,11 @@ const config = require('../config');
 module.exports = (app) => {
   app.set('trust proxy', 1);
 
+  // TODO: Health checkup, more sophisticated analysis
+  app.use('/status', (req, res) => {
+    res.sendStatus(200);
+  });
+
   // CORS configuration
   app.use(
     cors({
@@ -24,6 +30,16 @@ module.exports = (app) => {
       credentials: true,
     }),
   );
+
+  // Configure rate-limiting
+  if (util.env.isProd) {
+    app.use(
+      rateLimit({
+        windowMs: 60 * 1000, // 1 minute
+        max: 10, // limit each IP to 10 requests per windowMs
+      }),
+    );
+  }
 
   // Essential Security Headers
   app.use(helmet());
@@ -42,11 +58,6 @@ module.exports = (app) => {
 
   // Application routes
   controllers.configure(app);
-
-  // TODO: Health checkup, more sophisticated analysis
-  app.use('/status', (req, res) => {
-    res.sendStatus(200);
-  });
 
   app.use(middlewares.errorHandlerMiddleware);
 
