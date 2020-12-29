@@ -16,13 +16,6 @@ const util = require('../util');
 const config = require('../config');
 
 module.exports = (app) => {
-  app.set('trust proxy', 1);
-
-  // TODO: Health checkup, more sophisticated analysis
-  app.use('/status', (req, res) => {
-    res.sendStatus(200);
-  });
-
   // CORS configuration
   app.use(
     cors({
@@ -55,6 +48,8 @@ module.exports = (app) => {
 
   // Attaches Meta to the request and logger
   app.use(middlewares.assignMetaToRequestAndLogger);
+
+  app.use('/status', middlewares.statusCheck);
 
   // Application routes
   controllers.configure(app);
