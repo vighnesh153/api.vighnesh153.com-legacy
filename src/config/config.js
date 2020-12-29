@@ -22,6 +22,8 @@ const config = {
 
   // Database
   MONGODB_URI: env.MONGODB_URI || addMissingEnvVar('MONGODB_URI'),
+  MONGO_LOG_EXPIRY_SECONDS:
+    env.NODE_ENV === 'production' ? 5 * 24 * 60 * 60 : 60 * 60, // 5 days in production and 1 hour in development
 
   // Logging
   LOG_LEVEL: env.LOG_LEVEL || 'info',
