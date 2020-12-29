@@ -8,13 +8,17 @@ console.log(config.PROJECT_DIR);
 
 app
   .listen(config.PORT, () => {
-    logger.info(`
+    logger.info({
+      message: `
       ################################################
       🛡️  Server listening on port: ${config.PORT} 🛡️
       ################################################
-  `);
+  `,
+    });
   })
   .on('error', (err) => {
-    logger.error(err);
+    logger.error({
+      object: err,
+    });
     process.exit(1);
   });

@@ -1,6 +1,8 @@
 const express = require('express');
 const loaders = require('./loaders');
 
+const { gracefulShutdown } = require('./util');
+
 const app = express();
 
 (async function configureApp() {
@@ -9,10 +11,11 @@ const app = express();
   } catch (e) {
     const logger = app.get('logger');
     if (logger) {
-      logger.error(e);
+      logger.error({ object: e });
     } else {
       console.error(e);
     }
+    await gracefulShutdown(app);
   }
 }());
 
