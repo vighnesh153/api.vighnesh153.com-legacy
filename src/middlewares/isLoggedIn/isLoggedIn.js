@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
+const clearCookies = (res) => {
+  res.clearCookie('sessionId');
+  res.clearCookie('user');
+};
+
 module.exports = async (req, res, next) => {
   const { sessionId } = req.signedCookies;
   if (!sessionId) {
+    clearCookies(res);
     return res.json({
       status: 401,
       message: 'NOT_AUTHENTICATED',
@@ -20,6 +26,7 @@ module.exports = async (req, res, next) => {
 
     if (session === null) {
       // Invalid session ID
+      clearCookies(res);
       return res.json({
         status: 400,
         message: 'BAD_REQUEST',
@@ -28,6 +35,7 @@ module.exports = async (req, res, next) => {
 
     const sessionExpiryDate = new Date(session.expiresAt);
     if (sessionExpiryDate < new Date()) {
+      clearCookies(res);
       return res.json({
         status: 401,
         message: 'SESSION_EXPIRED',

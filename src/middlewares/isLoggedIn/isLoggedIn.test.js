@@ -23,9 +23,16 @@ describe('Is Logged in: Middleware tests', () => {
     };
     resStub = {
       json: jest.fn(),
+      clearCookie: jest.fn(),
     };
     nextStub = jest.fn();
   });
+
+  const testShouldClearCookies = () => {
+    expect(resStub.clearCookie).toBeCalledTimes(2);
+    expect(resStub.clearCookie).toBeCalledWith('sessionId');
+    expect(resStub.clearCookie).toBeCalledWith('user');
+  };
 
   describe('Auth Signed cookie not provided', () => {
     beforeAll(() => {
@@ -57,6 +64,8 @@ describe('Is Logged in: Middleware tests', () => {
     it('should not call next middleware', () => {
       expect(nextStub).toBeCalledTimes(0);
     });
+
+    it('should clear the cookies', testShouldClearCookies);
   });
 
   describe('Invalid Auth cookie(SessionID) provided', () => {
@@ -104,6 +113,8 @@ describe('Is Logged in: Middleware tests', () => {
     it('should not call next middleware', () => {
       expect(nextStub).toBeCalledTimes(0);
     });
+
+    it('should clear the cookies', testShouldClearCookies);
   });
 
   describe('Valid Auth cookie(SessionID) provided: Session Expired', () => {
@@ -155,6 +166,8 @@ describe('Is Logged in: Middleware tests', () => {
     it('should not call next middleware', () => {
       expect(nextStub).toBeCalledTimes(0);
     });
+
+    it('should clear the cookies', testShouldClearCookies);
   });
 
   describe('Valid Auth cookie(SessionID) provided: Session Not Expired', () => {
