@@ -16,7 +16,9 @@ async function githubSignupSuccess(req, res, next) {
   try {
     const session = await AuthService.createSession(req.user);
 
-    const expiresAt = new CustomDate().addDays(7).toDate();
+    const expiresAt = new CustomDate()
+      .addHours(config.SESSION_EXPIRY_HOURS)
+      .toDate();
     const userInfo = {
       name: req.user.name,
       roles: req.user.roles,
