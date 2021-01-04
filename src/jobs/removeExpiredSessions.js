@@ -4,6 +4,6 @@ module.exports = function removeExpiredSessions(agenda) {
   const Session = mongoose.model('Session');
 
   agenda.define('remove expired sessions', async () => {
-    await Session.remove({ expiresAt: { $lte: new Date() } });
+    await Session.deleteMany({ expiresAt: { $lte: new Date() } });
   });
 };
