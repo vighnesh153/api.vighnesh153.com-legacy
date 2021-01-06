@@ -65,6 +65,7 @@ describe('Is Logged in: Middleware tests', () => {
       expect(nextStub).toBeCalledTimes(0);
     });
 
+    // eslint-disable-next-line jest/expect-expect
     it('should clear the cookies', testShouldClearCookies);
   });
 
@@ -114,6 +115,7 @@ describe('Is Logged in: Middleware tests', () => {
       expect(nextStub).toBeCalledTimes(0);
     });
 
+    // eslint-disable-next-line jest/expect-expect
     it('should clear the cookies', testShouldClearCookies);
   });
 
@@ -167,6 +169,7 @@ describe('Is Logged in: Middleware tests', () => {
       expect(nextStub).toBeCalledTimes(0);
     });
 
+    // eslint-disable-next-line jest/expect-expect
     it('should clear the cookies', testShouldClearCookies);
   });
 

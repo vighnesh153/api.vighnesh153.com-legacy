@@ -1,5 +1,6 @@
 const { gracefulShutdown } = require('../../util');
 
+// eslint-disable-next-line no-unused-vars
 module.exports = async function errorHandler(err, req, res, next) {
   const { logger } = req;
 
