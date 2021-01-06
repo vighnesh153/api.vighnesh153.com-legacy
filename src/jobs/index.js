@@ -17,6 +17,9 @@ module.exports = async function configureJobs() {
     db: {
       address: config.MONGODB_URI,
       collection: 'agendaJobs',
+      options: {
+        useUnifiedTopology: true,
+      },
     },
   });
 
