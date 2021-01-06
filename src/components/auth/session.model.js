@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const { collections } = require('../../enums');
-
 const Session = new Schema({
   identifier: {
     type: Schema.Types.String,
@@ -27,4 +25,4 @@ const Session = new Schema({
   },
 });
 
-mongoose.model('Session', Session, collections.SESSIONS);
+mongoose.model('Session', Session, 'sessions');

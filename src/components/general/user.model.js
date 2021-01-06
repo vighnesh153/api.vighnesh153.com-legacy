@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const { collections } = require('../../enums');
-
 const User = new Schema({
   name: {
     type: Schema.Types.String,
@@ -42,4 +40,4 @@ const User = new Schema({
   },
 });
 
-mongoose.model('User', User, collections.USERS);
+mongoose.model('User', User, 'users');
