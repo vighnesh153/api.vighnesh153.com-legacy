@@ -24,6 +24,9 @@ module.exports = (app) => {
     }),
   );
 
+  // Attaches Meta to the request and logger
+  app.use(middlewares.assignMetaToRequestAndLogger);
+
   // Configure rate-limiting
   if (util.env.isProd) {
     app.use(
@@ -45,9 +48,6 @@ module.exports = (app) => {
 
   // CSRF configuration
   configureCSRF(app);
-
-  // Attaches Meta to the request and logger
-  app.use(middlewares.assignMetaToRequestAndLogger);
 
   app.use('/status', middlewares.statusCheck);
 

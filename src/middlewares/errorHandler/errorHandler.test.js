@@ -11,6 +11,7 @@ describe('Middleware: Error Handler', () => {
         warn: jest.fn(),
         error: jest.fn(),
       },
+      method: 'POST',
       body: {
         someBodyProp: Math.random(),
       },
@@ -49,11 +50,12 @@ describe('Middleware: Error Handler', () => {
 
     it(
       'should call logger.warn with message, '
-        + 'request body, and request parameters',
+        + 'request method, body, and parameters',
       () => {
         errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
         expect(reqStub.logger.warn).toBeCalledWith({
           message: errStub.message,
+          method: reqStub.method,
           requestBody: reqStub.body,
           params: reqStub.params,
         });
@@ -89,6 +91,7 @@ describe('Middleware: Error Handler', () => {
       errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(reqStub.logger.warn).toBeCalledWith({
         message: 'Error Bad CSRF Token',
+        method: reqStub.method,
         path: reqStub.url,
         requestBody: reqStub.body,
         params: reqStub.params,
@@ -103,6 +106,45 @@ describe('Middleware: Error Handler', () => {
     it('should call res.sendStatus with 400', () => {
       errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(resStub.sendStatus).toBeCalledWith(400);
+    });
+  });
+
+  describe('Request Body too large', () => {
+    let errStub;
+    beforeEach(() => {
+      errStub = {
+        message: 'request entity too large',
+      };
+    });
+
+    it('should call logger.error once', () => {
+      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+      expect(reqStub.logger.error).toBeCalledTimes(1);
+    });
+
+    it(
+      'should call logger.error with message, '
+        + 'method, path, requestBody, params',
+      () => {
+        errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+        expect(reqStub.logger.error).toBeCalledWith({
+          message: errStub.message,
+          method: reqStub.method,
+          path: reqStub.url,
+          requestBody: reqStub.body,
+          params: reqStub.params,
+        });
+      },
+    );
+
+    it('should call res.sendStatus with 400', () => {
+      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+      expect(resStub.sendStatus).toBeCalledWith(400);
+    });
+
+    it('should call res.sendStatus once', () => {
+      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+      expect(resStub.sendStatus).toBeCalledTimes(1);
     });
   });
 
@@ -128,6 +170,7 @@ describe('Middleware: Error Handler', () => {
         expect(reqStub.logger.error).toBeCalledWith({
           message: errStub.message,
           stackTrace: errStub.stack,
+          method: reqStub.method,
           path: reqStub.url,
           requestBody: reqStub.body,
           params: reqStub.params,

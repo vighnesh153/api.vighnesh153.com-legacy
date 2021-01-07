@@ -3,11 +3,11 @@ const { gracefulShutdown } = require('../util');
 module.exports = function unhandledAndUncaughtStuff(app) {
   const logger = app.get('logger');
 
-  process.on('unhandledRejection', async (reason, p) => {
+  process.on('unhandledRejection', async (reason) => {
     logger.error({
-      reason,
-      message: 'Unhandled Rejection at Promise',
-      promise: p,
+      stack: reason && reason.stack,
+      reason: 'Unhandled Rejection at Promise',
+      message: reason && reason.message,
     });
     await gracefulShutdown(app);
   });
