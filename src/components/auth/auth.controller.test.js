@@ -1,4 +1,4 @@
-describe('Assign correct middlewares to routes', () => {
+describe('Assign correct middlewares to Auth routes', () => {
   let router;
   let middlewares;
   let authMiddlewares;
