@@ -52,4 +52,14 @@ describe('Assign correct middlewares to Apps routes', () => {
       appsMiddlewares.updateApps,
     );
   });
+
+  it('should define a wildcard match handler', () => {
+    expect(router.use).toBeCalledTimes(1);
+  });
+
+  it('should assign correct middlewares to /apps (USE)', () => {
+    expect(router.use).toBeCalledWith(
+      appsMiddlewares.catchAllWildcardRouteHandler,
+    );
+  });
 });

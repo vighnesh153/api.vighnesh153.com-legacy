@@ -12,6 +12,6 @@ router.put(
   appsMiddlewares.updateApps,
 );
 
-// router.use(appsMiddlewares.catchAllWildcardRouteHandler);
+router.use(appsMiddlewares.catchAllWildcardRouteHandler);
 
 module.exports = router;

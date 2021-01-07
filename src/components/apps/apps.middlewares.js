@@ -18,3 +18,12 @@ exports.updateApps = async function updateApps(req, res) {
 
   res.sendStatus(success ? 200 : 500);
 };
+
+exports.catchAllWildcardRouteHandler = function catchAllWildcardRouteHandler(
+  req,
+  res,
+) {
+  res.json({
+    message: '✨ Apps Component root for apps.vighnesh153.com ✨',
+  });
+};
