@@ -21,7 +21,7 @@ exports.updateApps = async function updateApps(apps, logger) {
       name: app.name,
       url: app.url,
       description: app.description,
-      priority: index,
+      priority: index + 1,
     }));
     await App.insertMany(transformedApps);
     logger.info({ message: 'Populated with updated apps.' });
