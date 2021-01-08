@@ -17,7 +17,8 @@ module.exports = function configureCSRF(app) {
   );
 
   app.use((req, res, next) => {
-    res.cookie('XSRF-TOKEN', req.csrfToken(), {
+    res.cookie('vighnesh153-XSRF-TOKEN', req.csrfToken(), {
+      secure: util.env.isProd,
       domain,
     });
     next();
