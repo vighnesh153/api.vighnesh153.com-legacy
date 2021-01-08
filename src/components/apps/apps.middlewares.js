@@ -2,7 +2,7 @@ const AppsService = require('./apps.service');
 
 exports.getAllApps = async function getAllApps(req, res) {
   const { logger } = req;
-  logger.info('BEGIN: Get All Apps.');
+  logger.info({ message: 'BEGIN: Get All Apps.' });
 
   const apps = await AppsService.getAllApps(logger);
 
@@ -11,7 +11,7 @@ exports.getAllApps = async function getAllApps(req, res) {
 
 exports.updateApps = async function updateApps(req, res) {
   const { logger } = req;
-  logger.info('BEGIN: Update Apps.');
+  logger.info({ message: 'BEGIN: Update Apps.' });
 
   const apps = req.body;
   const success = await AppsService.updateApps(apps, logger);
