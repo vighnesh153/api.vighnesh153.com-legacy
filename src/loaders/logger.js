@@ -72,11 +72,29 @@ if (util.env.isDev) {
   logger.add(mongoDBTransport);
 })();
 
+const loggerProxy = new Proxy(logger, {
+  get(target, prop) {
+    return (logObject = {}) => {
+      const logData = {};
+      if (`${logObject}` === logObject) {
+        // if string
+        logData.message = logObject;
+      } else {
+        logData.message = logObject.message || 'EMPTY';
+        delete logObject.message;
+        logData.metadata = logObject;
+      }
+      // eslint-disable-next-line security/detect-object-injection
+      logger[prop](logData);
+    };
+  },
+});
+
 const configureApp = (app) => {
-  app.set('logger', logger);
+  app.set('logger', loggerProxy);
 };
 
 module.exports = {
   configure: configureApp,
-  instance: logger,
+  instance: loggerProxy,
 };
