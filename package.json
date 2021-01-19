@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "docker-compose:up": "docker-compose up -d",
+    "docker-compose:down": "docker-compose down",
+    "docker-compose": "npm run docker-compose:down && npm run docker-compose:up",
     "start": "node bin/httpServer.js",
-    "dev": "nodemon bin/httpServer.js",
+    "dev": "npm run docker-compose && nodemon bin/httpServer.js",
     "prettier:check": "prettier -c .",
     "prettier:fix": "prettier -w .",
     "lint:fix": "eslint --fix .",
