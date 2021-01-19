@@ -30,16 +30,3 @@ Done
 * [x] `npm install winston winston-daily-rotate-file`
 * [x] `npm install --save-dev eslint-plugin-security`
 * [x] `npm install axios`
-
-Todo
-* [ ] Make winston work properly with PM2
-
-
-# Database
-#### Auth
-Collections:
-* Sessions
-
-#### General 
-Collections:
-* Users
