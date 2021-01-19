@@ -18,6 +18,7 @@ const config = {
   PORT: env.PORT || 80,
   COOKIE_SECRET: env.COOKIE_SECRET || 'SUPER SECRET',
   SESSION_EXPIRY_HOURS: isProd() ? 7 * 24 : 1, // 7 days for production and 1 hour for dev
+  ADMIN_TOKEN_EXPIRY_HOURS: isProd() ? 24 : 1, // 24 hours for production and 1 hour for dev
 
   // URL meta information
   HOST_URL: env.HOST_URL || addMissingEnvVar('HOST_URL'),

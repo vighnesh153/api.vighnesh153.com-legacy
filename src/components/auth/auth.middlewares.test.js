@@ -4,6 +4,7 @@ describe('Auth Middlewares Tests', () => {
 
   let requestStub;
   let responseStub;
+  let nextStub;
 
   beforeEach(() => {
     jest.mock('./auth.service', () => ({
@@ -79,6 +80,240 @@ describe('Auth Middlewares Tests', () => {
       expect(responseStub.json).toBeCalledTimes(1);
       expect(responseStub.json).toBeCalledWith({
         message: 'SUCCESS',
+      });
+    });
+  });
+
+  describe('Test getAdminToken handler', () => {
+    const mockAdminToken = {
+      identifier: 'some-identifier',
+      expiresAt: new Date(),
+    };
+
+    beforeEach(() => {
+      responseStub = {
+        json: jest.fn(),
+      };
+      nextStub = jest.fn();
+    });
+
+    describe('Successfully created token', () => {
+      beforeEach(() => {
+        jest.resetModules();
+        jest.mock('./auth.service', () => ({
+          async createAdminToken() {
+            return mockAdminToken;
+          },
+        }));
+        /* eslint-disable global-require */
+        authMiddlewares = require('./auth.middlewares');
+        /* eslint-enable global-require */
+      });
+
+      it('should invoke the res.json method', async () => {
+        await authMiddlewares.getAdminToken({}, responseStub, nextStub);
+
+        expect(responseStub.json).toBeCalledTimes(1);
+      });
+
+      it('should invoke the res.json method with AdminToken', async () => {
+        await authMiddlewares.getAdminToken({}, responseStub, nextStub);
+
+        const expected = { ...mockAdminToken };
+        delete expected.identifier;
+        expected.token = mockAdminToken.identifier;
+        expect(responseStub.json).toBeCalledWith(expected);
+      });
+
+      it('should not invoke the next middleware', async () => {
+        await authMiddlewares.getAdminToken({}, responseStub, nextStub);
+
+        expect(nextStub).toBeCalledTimes(0);
+      });
+    });
+
+    describe('Failed to create token', () => {
+      const mockError = new Error('Some error occurred.');
+
+      beforeEach(() => {
+        jest.resetModules();
+        jest.mock('./auth.service', () => ({
+          async createAdminToken() {
+            throw mockError;
+          },
+        }));
+        /* eslint-disable global-require */
+        authMiddlewares = require('./auth.middlewares');
+        /* eslint-enable global-require */
+      });
+
+      it('should not invoke the res.json method', async () => {
+        await authMiddlewares.getAdminToken({}, responseStub, nextStub);
+
+        expect(responseStub.json).toBeCalledTimes(0);
+      });
+
+      it('should invoke the next middleware once', async () => {
+        await authMiddlewares.getAdminToken({}, responseStub, nextStub);
+
+        expect(nextStub).toBeCalledTimes(1);
+      });
+
+      it('should invoke the next middleware with error', async () => {
+        await authMiddlewares.getAdminToken({}, responseStub, nextStub);
+
+        expect(nextStub).toBeCalledWith(mockError);
+      });
+    });
+  });
+
+  describe('Test verifyAdminToken handler', () => {
+    beforeEach(() => {
+      requestStub = {
+        body: {},
+      };
+      responseStub = {
+        json: jest.fn(),
+      };
+      nextStub = jest.fn();
+    });
+
+    describe('Cannot find Admin Token', () => {
+      beforeEach(async () => {
+        jest.resetModules();
+        jest.mock('./auth.service', () => ({
+          async findAdminToken() {
+            return null;
+          },
+        }));
+        /* eslint-disable global-require */
+        authMiddlewares = require('./auth.middlewares');
+        /* eslint-enable global-require */
+
+        await authMiddlewares.verifyAdminToken(
+          requestStub,
+          responseStub,
+          nextStub,
+        );
+      });
+
+      it('should invoke res.json method', () => {
+        expect(responseStub.json).toBeCalledTimes(1);
+      });
+
+      it('should invoke res.json method with 404 status', () => {
+        expect(responseStub.json).toBeCalledWith({
+          status: 404,
+        });
+      });
+
+      it('should not invoke next middleware', () => {
+        expect(nextStub).toBeCalledTimes(0);
+      });
+    });
+
+    describe('Expired Admin Token', () => {
+      beforeEach(async () => {
+        jest.resetModules();
+        jest.mock('./auth.service', () => ({
+          async findAdminToken() {
+            return {
+              expiresAt: new Date(Date.now() - 10),
+            };
+          },
+        }));
+        /* eslint-disable global-require */
+        authMiddlewares = require('./auth.middlewares');
+        /* eslint-enable global-require */
+
+        await authMiddlewares.verifyAdminToken(
+          requestStub,
+          responseStub,
+          nextStub,
+        );
+      });
+
+      it('should invoke res.json method', () => {
+        expect(responseStub.json).toBeCalledTimes(1);
+      });
+
+      it('should invoke res.json method with 401 status', () => {
+        expect(responseStub.json).toBeCalledWith({
+          status: 401,
+        });
+      });
+
+      it('should not invoke next middleware', () => {
+        expect(nextStub).toBeCalledTimes(0);
+      });
+    });
+
+    describe('Valid Admin Token', () => {
+      beforeEach(async () => {
+        jest.resetModules();
+        jest.mock('./auth.service', () => ({
+          async findAdminToken() {
+            return {
+              expiresAt: new Date(Date.now() + 10),
+            };
+          },
+        }));
+        /* eslint-disable global-require */
+        authMiddlewares = require('./auth.middlewares');
+        /* eslint-enable global-require */
+
+        await authMiddlewares.verifyAdminToken(
+          requestStub,
+          responseStub,
+          nextStub,
+        );
+      });
+
+      it('should invoke the res.json method', () => {
+        expect(responseStub.json).toBeCalledTimes(1);
+      });
+
+      it('should invoke the res.json method with 200', () => {
+        expect(responseStub.json).toBeCalledWith({
+          status: 200,
+        });
+      });
+
+      it('should not invoke the next middleware', () => {
+        expect(nextStub).toBeCalledTimes(0);
+      });
+    });
+
+    describe('Error Occurred', () => {
+      const mockError = new Error('Something went wrong!');
+      beforeEach(async () => {
+        jest.resetModules();
+        jest.mock('./auth.service', () => ({
+          async findAdminToken() {
+            throw mockError;
+          },
+        }));
+        /* eslint-disable global-require */
+        authMiddlewares = require('./auth.middlewares');
+        /* eslint-enable global-require */
+
+        await authMiddlewares.verifyAdminToken(
+          requestStub,
+          responseStub,
+          nextStub,
+        );
+      });
+
+      it('should not invoke res.json method', () => {
+        expect(responseStub.json).toBeCalledTimes(0);
+      });
+
+      it('should invoke next middleware', () => {
+        expect(nextStub).toBeCalledTimes(1);
+      });
+
+      it('should invoke next middleware with errorObj', () => {
+        expect(nextStub).toBeCalledWith(mockError);
       });
     });
   });

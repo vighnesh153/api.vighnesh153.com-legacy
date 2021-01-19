@@ -47,6 +47,41 @@ function verifyLoginSuccess(req, res) {
   });
 }
 
+async function getAdminToken(req, res, next) {
+  try {
+    const adminToken = await AuthService.createAdminToken();
+    res.json({
+      token: adminToken.identifier,
+      expiresAt: adminToken.expiresAt,
+    });
+  } catch (e) {
+    next(e);
+  }
+}
+
+async function verifyAdminToken(req, res, next) {
+  try {
+    const token = `${req.body.token || ''}`;
+    const adminToken = await AuthService.findAdminToken(token);
+    if (adminToken === null) {
+      return res.json({
+        status: 404,
+      });
+    }
+    if (new Date(adminToken.expiresAt) < new Date()) {
+      // Token expired
+      return res.json({
+        status: 401,
+      });
+    }
+    return res.json({
+      status: 200,
+    });
+  } catch (e) {
+    next(e);
+  }
+}
+
 function catchAllWildcardRouteHandler(req, res) {
   res.json({
     message: '✨ Authentication Portal for *.vighnesh153.com ✨',
@@ -58,5 +93,7 @@ module.exports = {
   passportGithubAuthCallback,
   githubSignupSuccess,
   verifyLoginSuccess,
+  getAdminToken,
+  verifyAdminToken,
   catchAllWildcardRouteHandler,
 };

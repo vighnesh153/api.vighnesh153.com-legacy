@@ -1,5 +1,5 @@
 describe('Test Auth Service', () => {
-  let mockSessionObj;
+  let mockModelObj;
   let authService;
 
   beforeEach(() => {
@@ -7,8 +7,12 @@ describe('Test Auth Service', () => {
       model() {
         return {
           async create() {
-            mockSessionObj = Math.random();
-            return mockSessionObj;
+            mockModelObj = Math.random();
+            return mockModelObj;
+          },
+          async findOne() {
+            mockModelObj = Math.random();
+            return mockModelObj;
           },
         };
       },
@@ -20,6 +24,16 @@ describe('Test Auth Service', () => {
 
   it('should create a new session and return it', async () => {
     const session = await authService.createSession({});
-    expect(session).toBe(mockSessionObj);
+    expect(session).toBe(mockModelObj);
+  });
+
+  it('should create a new admin token and return it', async () => {
+    const adminToken = await authService.createAdminToken();
+    expect(adminToken).toBe(mockModelObj);
+  });
+
+  it('should return the admin token', async () => {
+    const adminToken = await authService.findAdminToken();
+    expect(adminToken).toBe(mockModelObj);
   });
 });

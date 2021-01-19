@@ -15,6 +15,27 @@ async function createSession(loggedInUser) {
   });
 }
 
+async function createAdminToken() {
+  const AdminToken = mongoose.model('AdminToken');
+
+  return await AdminToken.create({
+    identifier: crypto.randomBytes(50).toString('hex'),
+    expiresAt: new CustomDate()
+      .addHours(config.ADMIN_TOKEN_EXPIRY_HOURS)
+      .toDate(),
+  });
+}
+
+async function findAdminToken(token) {
+  const AdminToken = mongoose.model('AdminToken');
+
+  return await AdminToken.findOne({
+    identifier: `${token || ''}`,
+  });
+}
+
 module.exports = {
   createSession,
+  createAdminToken,
+  findAdminToken,
 };

@@ -3,7 +3,14 @@ describe('Assign correct middlewares to Auth routes', () => {
   let middlewares;
   let authMiddlewares;
 
-  beforeAll(() => {
+  beforeEach(() => {
+    jest.resetModules();
+
+    jest.mock('../../middlewares', () => ({
+      ensureAuthenticated: jest.fn(),
+      ensureRoles: (...roles) => roles,
+    }));
+
     /* eslint-disable global-require */
     middlewares = require('../../middlewares');
     authMiddlewares = require('./auth.middlewares');
@@ -12,6 +19,7 @@ describe('Assign correct middlewares to Auth routes', () => {
       Router() {
         return {
           get: jest.fn(),
+          post: jest.fn(),
           use: jest.fn(),
         };
       },
@@ -20,12 +28,12 @@ describe('Assign correct middlewares to Auth routes', () => {
     /* eslint-enable global-require */
   });
 
-  afterAll(() => {
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should define 3 routes', () => {
-    expect(router.get).toBeCalledTimes(3);
+  it('should define 4 get routes', () => {
+    expect(router.get).toBeCalledTimes(4);
   });
 
   it('should assign correct middlewares to /auth/github', () => {
@@ -49,5 +57,41 @@ describe('Assign correct middlewares to Auth routes', () => {
       middlewares.ensureAuthenticated,
       authMiddlewares.verifyLoginSuccess,
     );
+  });
+
+  it('should assign correct middlewares to /admin-token', () => {
+    expect(router.get).toBeCalledWith(
+      '/admin-token',
+      middlewares.ensureAuthenticated,
+      middlewares.ensureRoles('admin'),
+      authMiddlewares.getAdminToken,
+    );
+  });
+
+  describe('Verify Admin Token', () => {
+    it('should define 1 post route', () => {
+      expect(router.post).toBeCalledTimes(1);
+    });
+
+    it('should assign correct middlewares to /verify-admin-token', () => {
+      expect(router.post).toBeCalledWith(
+        '/verify-admin-token',
+        middlewares.ensureAuthenticated,
+        middlewares.ensureRoles('admin'),
+        authMiddlewares.verifyAdminToken,
+      );
+    });
+  });
+
+  describe('Catch All Handler', () => {
+    it('should define 1 use route for catchAllHandler', () => {
+      expect(router.use).toBeCalledTimes(1);
+    });
+
+    it('should assign correct middlewares to Catch-All handler', () => {
+      expect(router.use).toBeCalledWith(
+        authMiddlewares.catchAllWildcardRouteHandler,
+      );
+    });
   });
 });

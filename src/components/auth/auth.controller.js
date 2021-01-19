@@ -17,6 +17,20 @@ router.get(
   authMiddlewares.verifyLoginSuccess,
 );
 
+router.get(
+  '/admin-token',
+  middlewares.ensureAuthenticated,
+  middlewares.ensureRoles('admin'),
+  authMiddlewares.getAdminToken,
+);
+
+router.post(
+  '/verify-admin-token',
+  middlewares.ensureAuthenticated,
+  middlewares.ensureRoles('admin'),
+  authMiddlewares.verifyAdminToken,
+);
+
 router.use(authMiddlewares.catchAllWildcardRouteHandler);
 
 module.exports = router;

@@ -3,11 +3,17 @@ const Agenda = require('agenda');
 const config = require('../config');
 
 const removeExpiredSessions = require('./removeExpiredSessions');
+const removeExpiredAdminTokens = require('./removeExpiredAdminTokens');
 
 const jobs = [
   {
     name: 'remove expired sessions',
     definer: removeExpiredSessions,
+    interval: '24 hours',
+  },
+  {
+    name: 'remove expired admin tokens',
+    definer: removeExpiredAdminTokens,
     interval: '24 hours',
   },
 ];
