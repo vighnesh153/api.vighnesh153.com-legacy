@@ -32,8 +32,8 @@ describe('Assign correct middlewares to Auth routes', () => {
     jest.clearAllMocks();
   });
 
-  it('should define 4 get routes', () => {
-    expect(router.get).toBeCalledTimes(4);
+  it('should define 5 get routes', () => {
+    expect(router.get).toBeCalledTimes(5);
   });
 
   it('should assign correct middlewares to /auth/github', () => {
@@ -68,19 +68,11 @@ describe('Assign correct middlewares to Auth routes', () => {
     );
   });
 
-  describe('Verify Admin Token', () => {
-    it('should define 1 post route', () => {
-      expect(router.post).toBeCalledTimes(1);
-    });
-
-    it('should assign correct middlewares to /verify-admin-token', () => {
-      expect(router.post).toBeCalledWith(
-        '/verify-admin-token',
-        middlewares.ensureAuthenticated,
-        middlewares.ensureRoles('admin'),
-        authMiddlewares.verifyAdminToken,
-      );
-    });
+  it('should assign correct middlewares to /verify-admin-token', () => {
+    expect(router.get).toBeCalledWith(
+      '/verify-admin-token',
+      authMiddlewares.verifyAdminToken,
+    );
   });
 
   describe('Catch All Handler', () => {

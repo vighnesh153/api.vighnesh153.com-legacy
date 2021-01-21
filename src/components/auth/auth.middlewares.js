@@ -61,7 +61,7 @@ async function getAdminToken(req, res, next) {
 
 async function verifyAdminToken(req, res, next) {
   try {
-    const token = `${req.body.token || ''}`;
+    const token = `${req.header('token') || ''}`;
     const adminToken = await AuthService.findAdminToken(token);
     if (adminToken === null) {
       return res.json({

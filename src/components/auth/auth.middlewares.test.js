@@ -26,6 +26,7 @@ describe('Auth Middlewares Tests', () => {
         roles: ['role1', 'role2'],
         profileImage: 'URL',
       },
+      header: () => 'token',
     };
   });
 
@@ -171,6 +172,7 @@ describe('Auth Middlewares Tests', () => {
     beforeEach(() => {
       requestStub = {
         body: {},
+        header: () => 'token',
       };
       responseStub = {
         json: jest.fn(),

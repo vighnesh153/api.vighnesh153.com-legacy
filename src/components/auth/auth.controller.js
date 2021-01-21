@@ -24,12 +24,7 @@ router.get(
   authMiddlewares.getAdminToken,
 );
 
-router.post(
-  '/verify-admin-token',
-  middlewares.ensureAuthenticated,
-  middlewares.ensureRoles('admin'),
-  authMiddlewares.verifyAdminToken,
-);
+router.get('/verify-admin-token', authMiddlewares.verifyAdminToken);
 
 router.use(authMiddlewares.catchAllWildcardRouteHandler);
 
