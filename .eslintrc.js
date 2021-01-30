@@ -22,6 +22,7 @@ module.exports = {
     'no-await-in-loop': 'off',
     'no-underscore-dangle': 'off',
     'consistent-return': 'off',
+    'no-plusplus': 'off',
 
     'max-len': 'warn',
     'no-unused-vars': 'warn',
