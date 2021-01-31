@@ -26,7 +26,7 @@ const logger = createLogger({
     format.splat(),
     format.json(),
   ),
-  defaultMeta: { service: 'doll' },
+  defaultMeta: { service: 'api.vighnesh153.com' },
 });
 
 // File logger
