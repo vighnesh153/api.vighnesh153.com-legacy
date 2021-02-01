@@ -12,6 +12,7 @@ const isProd = () => env.NODE_ENV === 'production';
 const config = {
   // Project meta information
   PROJECT_DIR: path.resolve(__dirname, '..', '..'),
+  SERVICE_NAME: 'api.vighnesh153.com',
 
   // Server meta information
   ENV: env.NODE_ENV || addMissingEnvVar('NODE_ENV'),

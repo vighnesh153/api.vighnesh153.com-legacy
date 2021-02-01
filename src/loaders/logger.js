@@ -26,7 +26,7 @@ const logger = createLogger({
     format.splat(),
     format.json(),
   ),
-  defaultMeta: { service: 'api.vighnesh153.com' },
+  defaultMeta: { service: config.SERVICE_NAME },
 });
 
 // File logger
@@ -75,14 +75,21 @@ if (util.env.isDev) {
 const loggerProxy = new Proxy(logger, {
   get(target, prop) {
     return (logObject = {}) => {
-      const logData = {};
+      const logData = {
+        metadata: {
+          service: config.SERVICE_NAME,
+        },
+      };
       if (`${logObject}` === logObject) {
         // if string
         logData.message = logObject;
       } else {
         logData.message = logObject.message || 'EMPTY';
         delete logObject.message;
-        logData.metadata = logObject;
+        logData.metadata = {
+          ...logData.metadata,
+          ...logObject,
+        };
       }
       // eslint-disable-next-line security/detect-object-injection
       logger[prop](logData);
