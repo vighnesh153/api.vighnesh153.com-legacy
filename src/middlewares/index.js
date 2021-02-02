@@ -6,10 +6,10 @@ const statusCheck = require('./statusCheck');
 const ensureRoles = require('./ensureRoles');
 
 module.exports = {
-  ensureAuthenticated: isLoggedIn,
-  errorHandlerMiddleware: errorHandler,
-  assignMetaToRequestAndLogger,
   handle404,
-  statusCheck,
+  assignMetaToRequestAndLogger,
   ensureRoles,
+  errorHandler,
+  ensureAuthenticated: isLoggedIn,
+  statusCheck,
 };

@@ -58,7 +58,7 @@ module.exports = (app) => {
   app.use(middlewares.handle404);
 
   // Error handling middleware
-  app.use(middlewares.errorHandlerMiddleware);
+  app.use(middlewares.errorHandler);
 
   // Useful if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
   // It shows the real origin IP in the heroku or Cloudwatch logs
