@@ -10,20 +10,6 @@ exports.getUniqueLogServices = async function getUniqueLogServices(req, res) {
   res.json(services);
 };
 
-exports.getLogs = async function getLogs(req, res) {
-  const { logger } = req;
-
-  console.log(req.query);
-  console.log(req.query.filter.requestId);
-  console.log(req.query.filter.timestamp);
-
-  // logger.info({ message: 'BEGIN: Fetch logs.' });
-  const logs = await LogsService.getLogs(logger);
-  // logger.info({ message: 'END: Fetch logs.' });
-
-  res.json(logs);
-};
-
 exports.catchAllWildcardRouteHandler = function catchAllWildcardRouteHandler(
   req,
   res,
