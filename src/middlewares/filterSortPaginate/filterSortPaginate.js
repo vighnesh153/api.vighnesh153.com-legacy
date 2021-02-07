@@ -13,10 +13,13 @@ module.exports = function filterSortPaginate(model) {
       }
 
       logger.info({ message: 'Applying Pagination' });
-      if (pagination) {
-        result = result.skip(pagination.skip || 0);
-        result = result.limit(Math.min(50, pagination.limit || 10));
-      }
+      const paginationObj = {
+        skip: 0,
+        limit: 10,
+        ...(pagination || {}),
+      };
+      result = result.skip(paginationObj.skip || 0);
+      result = result.limit(Math.min(50, paginationObj.limit || 10));
 
       logger.info({ message: 'Awaiting Results' });
       result = await result.exec();
