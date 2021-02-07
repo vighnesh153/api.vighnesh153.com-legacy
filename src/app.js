@@ -11,7 +11,10 @@ const app = express();
   } catch (e) {
     const logger = app.get('logger');
     if (logger) {
-      logger.error({ object: e });
+      logger.error({
+        message: e.message,
+        stackTrace: e.stack,
+      });
     } else {
       console.error(e);
     }

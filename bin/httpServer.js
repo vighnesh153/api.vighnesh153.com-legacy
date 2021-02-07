@@ -40,7 +40,8 @@ if (util.env.isProd && cluster.isMaster) {
     })
     .on('error', (err) => {
       logger.error({
-        object: err,
+        message: err.message,
+        stackTrace: err.stack,
       });
       process.exit(1);
     });

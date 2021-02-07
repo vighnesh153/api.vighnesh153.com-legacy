@@ -7,7 +7,10 @@ exports.getAllApps = async function getAllApps(logger) {
     logger.info({ message: 'Fetched all apps.' });
     return apps;
   } catch (err) {
-    logger.error({ obj: err });
+    logger.error({
+      message: err.message,
+      stackTrace: err.stack,
+    });
     return null;
   }
 };
@@ -27,7 +30,10 @@ exports.updateApps = async function updateApps(apps, logger) {
     logger.info({ message: 'Populated with updated apps.' });
     return true;
   } catch (err) {
-    logger.error({ obj: err });
+    logger.error({
+      message: err.message,
+      stackTrace: err.stack,
+    });
     return false;
   }
 };
