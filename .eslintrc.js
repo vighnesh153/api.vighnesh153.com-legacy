@@ -23,6 +23,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'consistent-return': 'off',
     'no-plusplus': 'off',
+    'security/detect-object-injection': 'off',
 
     'max-len': 'warn',
     'no-unused-vars': 'warn',

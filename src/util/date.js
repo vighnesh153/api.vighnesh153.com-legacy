@@ -1,6 +1,6 @@
 class CustomDate {
   constructor() {
-    this.date = Date.now();
+    this.timestamp = Date.now();
   }
 
   addYears(x = 0) {
@@ -39,12 +39,16 @@ class CustomDate {
   }
 
   addMilliSeconds(x = 0) {
-    this.date += x;
+    this.timestamp += x;
     return this;
   }
 
   toDate() {
-    return new Date(this.date);
+    return new Date(this.timestamp);
+  }
+
+  getTimestamp() {
+    return this.timestamp;
   }
 }
 
