@@ -12,7 +12,6 @@ module.exports = function attachIdToRequest(req, res, next) {
         logger[prop]({
           ...logObject,
           requestId,
-          time: Date.now(),
         });
       };
     },

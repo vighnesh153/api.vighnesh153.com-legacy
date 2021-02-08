@@ -77,6 +77,7 @@ const loggerProxy = new Proxy(logger, {
     return (logObject = {}) => {
       const logData = {
         metadata: {
+          time: Date.now(),
           service: config.SERVICE_NAME,
         },
       };

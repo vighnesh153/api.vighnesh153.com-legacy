@@ -54,7 +54,6 @@ describe('Middleware: Assign ID to Request', () => {
 
       expect(loggerStub.info).toBeCalledWith({
         requestId: expect.anything(),
-        time: expect.anything(),
         ...logObject,
       });
     });
