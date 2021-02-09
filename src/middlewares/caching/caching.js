@@ -46,13 +46,16 @@ const cacheFor = (duration) => {
     next();
   };
 
-  const cacheMiddleware = (req, res, next) => {
+  function cacheMiddleware(req, res, next) {
     const { logger } = req;
     const freshRequired = req.cacheInfo[key].fresh;
     const cachedValue = cacheInstance.get(key);
     if (cachedValue === null || freshRequired) {
       const resJsonRef = res.json;
-      res.json = (responseData) => {
+      // The following has to be a function with
+      // the `function` keyword to preserve `this`.
+      // eslint-disable-next-line func-names
+      res.json = function (responseData) {
         cacheInstance.put(key, responseData, expiryTimeInMs, () => {
           logger.info({
             message: 'Clearing cache',
@@ -64,7 +67,7 @@ const cacheFor = (duration) => {
             params: req.params,
           });
         });
-        resJsonRef(responseData);
+        resJsonRef.call(this, responseData);
       };
       next();
       return;
@@ -80,7 +83,7 @@ const cacheFor = (duration) => {
       params: req.params,
     });
     res.json(cachedValue);
-  };
+  }
 
   return [allowCacheRefresh, cacheMiddleware];
 };
