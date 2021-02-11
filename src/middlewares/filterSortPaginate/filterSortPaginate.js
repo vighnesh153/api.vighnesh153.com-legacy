@@ -27,8 +27,8 @@ module.exports = function filterSortPaginate(model) {
       logger.info({ message: 'Sending Result' });
       res.json(result);
     } catch (err) {
-      logger.warn({ message: 'Some error occurred.' });
       err.isTrusted = true;
+      err.statusCode = 500;
       next(err);
     }
   };

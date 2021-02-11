@@ -36,8 +36,10 @@ async function githubSignupSuccess(req, res, next) {
       domain,
     });
     res.redirect(`${config.AUTH_CLIENT_URL}?loginSuccess`);
-  } catch (e) {
-    next(e);
+  } catch (err) {
+    err.isTrusted = true;
+    err.statusCode = 500;
+    next(err);
   }
 }
 
@@ -54,8 +56,10 @@ async function getAdminToken(req, res, next) {
       token: adminToken.identifier,
       expiresAt: adminToken.expiresAt,
     });
-  } catch (e) {
-    next(e);
+  } catch (err) {
+    err.isTrusted = true;
+    err.statusCode = 500;
+    next(err);
   }
 }
 
@@ -77,8 +81,10 @@ async function verifyAdminToken(req, res, next) {
     return res.json({
       status: 200,
     });
-  } catch (e) {
-    next(e);
+  } catch (err) {
+    err.isTrusted = true;
+    err.statusCode = 500;
+    next(err);
   }
 }
 

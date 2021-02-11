@@ -6,10 +6,10 @@ module.exports = async (app) => {
   try {
     await mongoose.connection.close();
     logger.info({ message: '💔💔💔 Connection closed. 💔💔💔' });
-  } catch (e) {
+  } catch (err) {
     logger.error({
-      message: e.message,
-      stackTrace: e.stack,
+      message: err.message,
+      stackTrace: err.stack,
     });
   } finally {
     logger.info({ message: '☠️☠️☠️ Shutting down. ☠️☠️☠️' });

@@ -55,8 +55,9 @@ module.exports = async (req, res, next) => {
 
     req.user = user;
     next();
-  } catch (error) {
-    error.isTrusted = true;
-    next(error);
+  } catch (err) {
+    err.isTrusted = true;
+    err.statusCode = 500;
+    next(err);
   }
 };

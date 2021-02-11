@@ -44,8 +44,10 @@ function configureGithubStrategy() {
           }
           const newUserDraft = formatUserProfile(profile);
           cb(null, await User.create(newUserDraft));
-        } catch (e) {
-          cb(e, null);
+        } catch (err) {
+          err.isTrusted = true;
+          err.statusCode = 500;
+          cb(err, null);
         }
       },
     ),
@@ -60,8 +62,10 @@ function configureGithubStrategy() {
       const filters = { githubId };
       const user = await User.findOne(filters).exec();
       done(null, user);
-    } catch (e) {
-      done(e, null);
+    } catch (err) {
+      err.isTrusted = true;
+      err.statusCode = 500;
+      done(err, null);
     }
   });
 }

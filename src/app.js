@@ -8,15 +8,15 @@ const app = express();
 (async function configureApp() {
   try {
     await loaders(app);
-  } catch (e) {
+  } catch (err) {
     const logger = app.get('logger');
     if (logger) {
       logger.error({
-        message: e.message,
-        stackTrace: e.stack,
+        message: err.message,
+        stackTrace: err.stack,
       });
     } else {
-      console.error(e);
+      console.error(err);
     }
     await gracefulShutdown(app);
   }
