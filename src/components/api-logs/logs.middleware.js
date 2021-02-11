@@ -7,7 +7,19 @@ exports.getUniqueLogServices = async function getUniqueLogServices(req, res) {
   const services = await LogsService.getUniqueLogServices(logger);
   logger.info({ message: 'END: Fetch all unique log services.' });
 
-  res.json(services);
+  if (services) {
+    res.json({
+      data: services,
+      status: 200,
+      message: 'Successfully fetched services.',
+    });
+  } else {
+    res.json({
+      data: services,
+      status: 500,
+      message: 'Failed to fetch services.',
+    });
+  }
 };
 
 exports.catchAllWildcardRouteHandler = function catchAllWildcardRouteHandler(

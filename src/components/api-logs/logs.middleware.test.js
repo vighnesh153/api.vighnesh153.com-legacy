@@ -23,7 +23,31 @@ describe('Logs Middleware tests', () => {
   it('should return correct response when unique services are requested', async () => {
     await logsMiddleware.getUniqueLogServices(reqStub, resStub);
 
-    expect(resStub.json).toBeCalledWith(mockServices);
+    expect(resStub.json).toBeCalledWith({
+      data: mockServices,
+      message: 'Successfully fetched services.',
+      status: 200,
+    });
+  });
+
+  it('should return correct response when fetching services fails', async () => {
+    jest.resetModules();
+    mockServices = null;
+
+    jest.mock('./logs.service', () => ({
+      getUniqueLogServices: jest.fn().mockResolvedValue(mockServices),
+    }));
+
+    // eslint-disable-next-line global-require
+    logsMiddleware = require('./logs.middleware');
+
+    await logsMiddleware.getUniqueLogServices(reqStub, resStub);
+
+    expect(resStub.json).toBeCalledWith({
+      data: mockServices,
+      message: 'Failed to fetch services.',
+      status: 500,
+    });
   });
 
   it('should return cool message when invoking catchAllWildcardRouteHandler', () => {
