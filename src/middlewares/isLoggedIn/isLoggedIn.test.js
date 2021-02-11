@@ -57,7 +57,7 @@ describe('Is Logged in: Middleware tests', () => {
     it('should return 401 status code', () => {
       expect(resStub.json).toBeCalledWith({
         status: 401,
-        message: 'NOT_AUTHENTICATED',
+        message: 'You are not logged in.',
       });
     });
 
@@ -107,7 +107,7 @@ describe('Is Logged in: Middleware tests', () => {
     it('should return 400 is invalid session id', async () => {
       expect(resStub.json).toBeCalledWith({
         status: 400,
-        message: 'BAD_REQUEST',
+        message: 'Nope. Bad Request.',
       });
     });
 
@@ -161,7 +161,7 @@ describe('Is Logged in: Middleware tests', () => {
     it('should return 401 status code', () => {
       expect(resStub.json).toBeCalledWith({
         status: 401,
-        message: 'SESSION_EXPIRED',
+        message: 'Your session has expired.',
       });
     });
 
