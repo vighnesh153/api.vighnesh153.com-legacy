@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
     clearCookies(res);
     return res.json({
       status: 401,
-      message: 'NOT_AUTHENTICATED',
+      message: 'You are not logged in.',
     });
   }
 
@@ -29,7 +29,7 @@ module.exports = async (req, res, next) => {
       clearCookies(res);
       return res.json({
         status: 400,
-        message: 'BAD_REQUEST',
+        message: 'Nope. Bad Request.',
       });
     }
 
@@ -38,7 +38,7 @@ module.exports = async (req, res, next) => {
       clearCookies(res);
       return res.json({
         status: 401,
-        message: 'SESSION_EXPIRED',
+        message: 'Your session has expired.',
       });
     }
 
