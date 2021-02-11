@@ -7,6 +7,7 @@ module.exports = async function errorHandler(err, req, res, next) {
   if (err.isTrusted) {
     logger.warn({
       message: err.message,
+      stackTrace: err.stack,
       method: req.method,
       requestBody: req.body,
       params: req.params,
