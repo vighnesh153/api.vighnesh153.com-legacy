@@ -12,6 +12,12 @@ module.exports = function attachIdToRequest(req, res, next) {
         logger[prop]({
           ...logObject,
           requestId,
+          method: req.method,
+          // path: req.originalUrl, // also includes query params
+          path: req.baseUrl + req.path,
+          params: req.params,
+          query: req.query,
+          requestBody: req.body,
         });
       };
     },

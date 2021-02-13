@@ -40,6 +40,7 @@ describe('Middleware: Error Handler', () => {
         isTrusted: true,
         message: 'Doll',
         statusCode: 153,
+        stack: 'bla-bla-bla',
       };
     });
 
@@ -48,19 +49,13 @@ describe('Middleware: Error Handler', () => {
       expect(reqStub.logger.warn).toBeCalledTimes(1);
     });
 
-    it(
-      'should call logger.warn with message, '
-        + 'request method, body, and parameters',
-      () => {
-        errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
-        expect(reqStub.logger.warn).toBeCalledWith({
-          message: errStub.message,
-          method: reqStub.method,
-          requestBody: reqStub.body,
-          params: reqStub.params,
-        });
-      },
-    );
+    it('should call logger.warn with message and stackTrace', () => {
+      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+      expect(reqStub.logger.warn).toBeCalledWith({
+        message: errStub.message,
+        stackTrace: errStub.stack,
+      });
+    });
 
     it('should call res.sendStatus once', () => {
       errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
@@ -87,14 +82,10 @@ describe('Middleware: Error Handler', () => {
       expect(reqStub.logger.warn).toBeCalledTimes(1);
     });
 
-    it('should call logger.warn with message, path, requestBody, params', () => {
+    it('should call logger.warn with message', () => {
       errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(reqStub.logger.warn).toBeCalledWith({
         message: 'Error Bad CSRF Token',
-        method: reqStub.method,
-        path: reqStub.url,
-        requestBody: reqStub.body,
-        params: reqStub.params,
       });
     });
 
@@ -122,20 +113,12 @@ describe('Middleware: Error Handler', () => {
       expect(reqStub.logger.error).toBeCalledTimes(1);
     });
 
-    it(
-      'should call logger.error with message, '
-        + 'method, path, requestBody, params',
-      () => {
-        errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
-        expect(reqStub.logger.error).toBeCalledWith({
-          message: errStub.message,
-          method: reqStub.method,
-          path: reqStub.url,
-          requestBody: reqStub.body,
-          params: reqStub.params,
-        });
-      },
-    );
+    it('should call logger.error with message', () => {
+      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+      expect(reqStub.logger.error).toBeCalledWith({
+        message: errStub.message,
+      });
+    });
 
     it('should call res.sendStatus with 400', () => {
       errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
@@ -162,21 +145,13 @@ describe('Middleware: Error Handler', () => {
       expect(reqStub.logger.error).toBeCalledTimes(1);
     });
 
-    it(
-      'should call logger.error with message, '
-        + 'stackTrace, path, requestBody, params',
-      () => {
-        errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
-        expect(reqStub.logger.error).toBeCalledWith({
-          message: errStub.message,
-          stackTrace: errStub.stack,
-          method: reqStub.method,
-          path: reqStub.url,
-          requestBody: reqStub.body,
-          params: reqStub.params,
-        });
-      },
-    );
+    it('should call logger.error with message and stackTrace', () => {
+      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+      expect(reqStub.logger.error).toBeCalledWith({
+        message: errStub.message,
+        stackTrace: errStub.stack,
+      });
+    });
 
     it('should call res.sendStatus once', () => {
       errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
