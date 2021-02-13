@@ -8,9 +8,6 @@ module.exports = async function errorHandler(err, req, res, next) {
     logger.warn({
       message: err.message,
       stackTrace: err.stack,
-      method: req.method,
-      requestBody: req.body,
-      params: req.params,
     });
     res.sendStatus(err.statusCode);
     return;
@@ -18,10 +15,6 @@ module.exports = async function errorHandler(err, req, res, next) {
   if (err.code === 'EBADCSRFTOKEN') {
     logger.warn({
       message: 'Error Bad CSRF Token',
-      method: req.method,
-      path: req.url,
-      requestBody: req.body,
-      params: req.params,
     });
     res.sendStatus(400);
     return;
@@ -29,10 +22,6 @@ module.exports = async function errorHandler(err, req, res, next) {
   if (err.message === 'request entity too large') {
     logger.error({
       message: err.message,
-      method: req.method,
-      path: req.url,
-      requestBody: req.body,
-      params: req.params,
     });
     res.sendStatus(400);
     return;
@@ -42,10 +31,6 @@ module.exports = async function errorHandler(err, req, res, next) {
   logger.error({
     message: err.message,
     stackTrace: err.stack,
-    method: req.method,
-    path: req.url,
-    requestBody: req.body,
-    params: req.params,
   });
   res.sendStatus(500);
   await gracefulShutdown(req.app);

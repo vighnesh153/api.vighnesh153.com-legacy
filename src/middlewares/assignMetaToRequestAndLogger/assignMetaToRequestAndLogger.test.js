@@ -13,6 +13,12 @@ describe('Middleware: Assign ID to Request', () => {
       app: {
         get: jest.fn().mockReturnValue(loggerStub),
       },
+      method: 'METHOD',
+      params: 'PARAMS',
+      path: 'PATH',
+      baseUrl: 'BASEURL',
+      query: 'QUERY',
+      body: 'BODY',
     };
     nextStub = jest.fn();
   });
@@ -54,6 +60,11 @@ describe('Middleware: Assign ID to Request', () => {
 
       expect(loggerStub.info).toBeCalledWith({
         requestId: expect.anything(),
+        method: reqStub.method,
+        params: reqStub.params,
+        query: reqStub.query,
+        path: reqStub.baseUrl + reqStub.path,
+        requestBody: reqStub.body,
         ...logObject,
       });
     });

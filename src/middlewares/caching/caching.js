@@ -63,8 +63,6 @@ const cacheFor = (duration) => {
               key,
               value: responseData,
             },
-            method: req.method,
-            params: req.params,
           });
         });
         resJsonRef.call(this, responseData);
@@ -78,9 +76,6 @@ const cacheFor = (duration) => {
         key,
         value: cachedValue,
       },
-      path: req.url,
-      method: req.method,
-      params: req.params,
     });
     res.json(cachedValue);
   }
