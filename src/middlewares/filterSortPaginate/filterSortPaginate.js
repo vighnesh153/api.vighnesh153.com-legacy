@@ -18,7 +18,7 @@ module.exports = function filterSortPaginate(model) {
         limit: 10,
         ...(pagination || {}),
       };
-      result = result.skip(paginationObj.skip || 0);
+      result = result.skip(parseInt(`${paginationObj.skip || 0}`, 10));
       result = result.limit(Math.min(50, paginationObj.limit || 10));
 
       logger.info({ message: 'Awaiting Results' });
