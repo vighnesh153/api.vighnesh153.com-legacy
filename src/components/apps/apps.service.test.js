@@ -95,6 +95,12 @@ describe('Test Apps Service', () => {
               throw new Error();
             },
           }),
+          startSession: jest.fn().mockResolvedValue({
+            startTransaction: jest.fn(),
+            commitTransaction: jest.fn(),
+            abortTransaction: jest.fn(),
+            endSession: jest.fn(),
+          }),
         }));
 
         // eslint-disable-next-line global-require
@@ -117,6 +123,12 @@ describe('Test Apps Service', () => {
               throw new Error();
             },
           }),
+          startSession: jest.fn().mockResolvedValue({
+            startTransaction: jest.fn(),
+            commitTransaction: jest.fn(),
+            abortTransaction: jest.fn(),
+            endSession: jest.fn(),
+          }),
         }));
 
         // eslint-disable-next-line global-require
@@ -133,6 +145,12 @@ describe('Test Apps Service', () => {
         model: () => ({
           deleteMany: jest.fn(),
           insertMany: jest.fn(),
+        }),
+        startSession: jest.fn().mockResolvedValue({
+          startTransaction: jest.fn(),
+          commitTransaction: jest.fn(),
+          abortTransaction: jest.fn(),
+          endSession: jest.fn(),
         }),
       }));
 
