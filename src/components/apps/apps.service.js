@@ -17,8 +17,10 @@ exports.getAllApps = async function getAllApps(logger) {
 
 exports.updateApps = async function updateApps(apps, logger) {
   const App = mongoose.model('App');
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
-    await App.deleteMany();
+    await App.deleteMany(null, { session });
     logger.info({ message: 'Deleted existing apps.' });
     const transformedApps = apps.map((app, index) => ({
       name: app.name,
@@ -26,14 +28,18 @@ exports.updateApps = async function updateApps(apps, logger) {
       description: app.description,
       priority: index + 1,
     }));
-    await App.insertMany(transformedApps);
+    await App.insertMany(transformedApps, { session });
+    await session.commitTransaction();
     logger.info({ message: 'Populated with updated apps.' });
     return true;
   } catch (err) {
+    await session.abortTransaction();
     logger.error({
       message: err.message,
       stackTrace: err.stack,
     });
     return false;
+  } finally {
+    session.endSession();
   }
 };

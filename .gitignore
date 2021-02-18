@@ -121,3 +121,5 @@ dist
 .idea
 playground
 mongo-volume
+
+data
