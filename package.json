@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "start:docker-daemon": "chmod +x scripts/docker-daemon.sh && scripts/docker-daemon.sh",
     "docker-compose:up": "docker-compose up -d",
     "docker-compose:down": "docker-compose down",
     "docker-compose": "npm run docker-compose:down && npm run docker-compose:up",
     "start": "node bin/httpServer.js",
-    "dev": "npm run docker-compose && nodemon bin/httpServer.js",
+    "dev": "npm run start:docker-daemon && npm run docker-compose && nodemon bin/httpServer.js",
     "prettier:check": "prettier -c .",
     "prettier:fix": "prettier -w .",
     "lint:fix": "eslint --fix .",
