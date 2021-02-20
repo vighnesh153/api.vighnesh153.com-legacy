@@ -1,4 +1,6 @@
-const { gracefulShutdown } = require('../../util');
+const { gracefulShutdown, env } = require('../../util');
+
+const errorOccurredEvent = require('../../events/errorOccurred');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = async function errorHandler(err, req, res, next) {
@@ -28,10 +30,18 @@ module.exports = async function errorHandler(err, req, res, next) {
   }
 
   // Not a trusted error
-  logger.error({
+  const errInfo = {
     message: err.message,
     stackTrace: err.stack,
-  });
+  };
+  logger.error(errInfo);
   res.sendStatus(500);
+  errorOccurredEvent(errInfo);
+
+  // Sleep for 10 seconds so that all events listeners,
+  // listening for error occurred can be completed
+  // before shutting down the app
+  await new Promise((resolve) => setTimeout(resolve, (env && env.isProd ? 10 : 1) * 1000));
+
   await gracefulShutdown(req.app);
 };
