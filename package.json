@@ -18,6 +18,7 @@
   "author": "Vighnesh Raut",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.4.2",
     "agenda": "^3.1.0",
     "axios": "^0.21.1",
     "cookie-parser": "^1.4.5",
@@ -31,6 +32,7 @@
     "mongoose": "^5.11.10",
     "passport": "^0.4.1",
     "passport-github": "^1.1.0",
+    "rxjs": "^6.6.3",
     "uuid": "^8.3.2",
     "winston": "^3.3.3",
     "winston-daily-rotate-file": "^4.5.0",

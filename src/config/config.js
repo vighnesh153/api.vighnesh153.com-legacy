@@ -33,6 +33,15 @@ const config = {
   // Logging
   LOG_LEVEL: env.LOG_LEVEL || 'info',
 
+  // Emails
+  SENDGRID_API_KEY:
+    env.SENDGRID_API_KEY || addMissingEnvVar('SENDGRID_API_KEY'),
+  ADMIN_FROM_EMAIL: env.SENDGRID_ADMIN_EMAIL || 'me@vighnesh153.com',
+  ADMIN_TO_EMAIL: 'me@vighnesh153.com',
+  SENDGRID_TEMPLATE_ID: isProd()
+    ? 'd-711062cd57f549d78279327cc70bf89f '
+    : 'd-8f3c30cc49454effbac400d6e0ea4780',
+
   // Github Details
   GITHUB_ADMIN_USERNAME:
     env.GITHUB_ADMIN_USERNAME || addMissingEnvVar('GITHUB_ADMIN_USERNAME'),

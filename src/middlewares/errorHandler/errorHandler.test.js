@@ -1,3 +1,5 @@
+jest.mock('../../events/errorOccurred', () => () => {});
+
 describe('Middleware: Error Handler', () => {
   let reqStub;
   let resStub;
@@ -44,26 +46,26 @@ describe('Middleware: Error Handler', () => {
       };
     });
 
-    it('should call logger.warn once', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call logger.warn once', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(reqStub.logger.warn).toBeCalledTimes(1);
     });
 
-    it('should call logger.warn with message and stackTrace', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call logger.warn with message and stackTrace', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(reqStub.logger.warn).toBeCalledWith({
         message: errStub.message,
         stackTrace: errStub.stack,
       });
     });
 
-    it('should call res.sendStatus once', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call res.sendStatus once', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(resStub.sendStatus).toBeCalledTimes(1);
     });
 
-    it('should call res.sendStatus with err.statusCode', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call res.sendStatus with err.statusCode', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(resStub.sendStatus).toBeCalledWith(errStub.statusCode);
     });
   });
@@ -77,25 +79,25 @@ describe('Middleware: Error Handler', () => {
       };
     });
 
-    it('should call logger.warn once', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call logger.warn once', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(reqStub.logger.warn).toBeCalledTimes(1);
     });
 
-    it('should call logger.warn with message', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call logger.warn with message', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(reqStub.logger.warn).toBeCalledWith({
         message: 'Error Bad CSRF Token',
       });
     });
 
-    it('should call res.sendStatus once', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call res.sendStatus once', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(resStub.sendStatus).toBeCalledTimes(1);
     });
 
-    it('should call res.sendStatus with 400', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call res.sendStatus with 400', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(resStub.sendStatus).toBeCalledWith(400);
     });
   });
@@ -108,25 +110,25 @@ describe('Middleware: Error Handler', () => {
       };
     });
 
-    it('should call logger.error once', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call logger.error once', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(reqStub.logger.error).toBeCalledTimes(1);
     });
 
-    it('should call logger.error with message', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call logger.error with message', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(reqStub.logger.error).toBeCalledWith({
         message: errStub.message,
       });
     });
 
-    it('should call res.sendStatus with 400', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call res.sendStatus with 400', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(resStub.sendStatus).toBeCalledWith(400);
     });
 
-    it('should call res.sendStatus once', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call res.sendStatus once', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(resStub.sendStatus).toBeCalledTimes(1);
     });
   });
@@ -140,26 +142,26 @@ describe('Middleware: Error Handler', () => {
       };
     });
 
-    it('should call logger.error once', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call logger.error once', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(reqStub.logger.error).toBeCalledTimes(1);
     });
 
-    it('should call logger.error with message and stackTrace', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call logger.error with message and stackTrace', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(reqStub.logger.error).toBeCalledWith({
         message: errStub.message,
         stackTrace: errStub.stack,
       });
     });
 
-    it('should call res.sendStatus once', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call res.sendStatus once', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(resStub.sendStatus).toBeCalledTimes(1);
     });
 
-    it('should call res.sendStatus with 500', () => {
-      errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
+    it('should call res.sendStatus with 500', async () => {
+      await errorHandlerMiddleware(errStub, reqStub, resStub, jest.fn());
       expect(resStub.sendStatus).toBeCalledWith(500);
     });
   });
