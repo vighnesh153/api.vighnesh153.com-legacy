@@ -7,6 +7,7 @@ describe('Middleware: Error Handler', () => {
   beforeEach(() => {
     jest.mock('../../util', () => ({
       gracefulShutdown: jest.fn().mockResolvedValue(null),
+      env: { isProd: false },
     }));
     reqStub = {
       logger: {
