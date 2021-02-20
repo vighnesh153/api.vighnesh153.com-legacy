@@ -15,6 +15,8 @@ describe('Caching Tests', () => {
       logger: {
         info: jest.fn(),
       },
+      originalUrl: 'bla-bla-1',
+      params: 'bla-bla-2',
       query: {},
     };
     resStub = {

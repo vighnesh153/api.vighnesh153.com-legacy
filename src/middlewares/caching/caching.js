@@ -48,19 +48,22 @@ const cacheFor = (duration) => {
 
   function cacheMiddleware(req, res, next) {
     const { logger } = req;
+    const localKey = `${key}-${req.originalUrl}-${req.params}-${JSON.stringify(
+      req.query,
+    )}`;
     const freshRequired = req.cacheInfo[key].fresh;
-    const cachedValue = cacheInstance.get(key);
+    const cachedValue = cacheInstance.get(localKey);
     if (cachedValue === null || freshRequired) {
       const resJsonRef = res.json;
       // The following has to be a function with
       // the `function` keyword to preserve `this`.
       // eslint-disable-next-line func-names
       res.json = function (responseData) {
-        cacheInstance.put(key, responseData, expiryTimeInMs, () => {
+        cacheInstance.put(localKey, responseData, expiryTimeInMs, () => {
           logger.info({
             message: 'Clearing cache',
             cachedData: {
-              key,
+              key: localKey,
               value: responseData,
             },
           });
@@ -73,7 +76,7 @@ const cacheFor = (duration) => {
     logger.info({
       message: 'Serving from CACHE',
       cachedData: {
-        key,
+        key: localKey,
         value: cachedValue,
       },
     });
