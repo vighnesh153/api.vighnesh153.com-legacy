@@ -1,4 +1,7 @@
-const { gracefulShutdown, env } = require('../../util');
+const {
+  gracefulShutdown,
+  env: { isProd },
+} = require('../../util');
 
 const errorOccurredEvent = require('../../events/errorOccurred');
 
@@ -41,7 +44,7 @@ module.exports = async function errorHandler(err, req, res, next) {
   // Sleep for 10 seconds so that all events listeners,
   // listening for error occurred can be completed
   // before shutting down the app
-  await new Promise((resolve) => setTimeout(resolve, (env && env.isProd ? 10 : 1) * 1000));
+  await new Promise((resolve) => setTimeout(resolve, (isProd ? 10 : 3) * 1000));
 
   await gracefulShutdown(req.app);
 };
