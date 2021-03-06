@@ -31,7 +31,7 @@ module.exports = (app) => {
   if (util.env.isProd) {
     app.use(
       rateLimit({
-        windowMs: 60 * 1000, // 1 minute
+        windowMs: 1000, // 1 second
         max: 10, // limit each IP to 10 requests per windowMs
       }),
     );
